@@ -9,4 +9,8 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'information.views.home'),
+    url(r'^products/', 'shopping_cart.views.list_product'),
+    url(r'^order/', 'shopping_cart.views.order'),
+    url(r'^signup/','shopping_cart.views.signup'),
 )
