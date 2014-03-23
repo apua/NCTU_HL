@@ -13,8 +13,8 @@ class Information(models.Model):
     announce = models.TextField()
 
 
-class Action(models.Model):
-    info = models.OneToOneField( Information, primary_key=True)
+class Schedule(models.Model):
+    info = models.OneToOneField( Information, primary_key=True )
     location = models.CharField( max_length=20 )
     order_st = models.DateField()
     order_ed = models.DateField()
