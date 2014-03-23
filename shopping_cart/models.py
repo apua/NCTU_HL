@@ -11,9 +11,9 @@ class Product(models.Model):
     picture = models.ImageField(
         upload_to='./upload'
     )
-    price = models.IntegerField()
+    price = models.SmallIntegerField()
     desciption = models.TextField()
-    expiration = models.IntegerField()
+    expiration = models.SmallIntegerField()
 
 
 
