@@ -12,4 +12,9 @@ class Product(models.Model):
     expiration = models.SmallIntegerField()
 
 
-
+class Order(models.Model):
+    user = models.ForeignKey('auth.User')
+    product = models.ForeignKey('shopping_cart.Product')
+    amount = models.SmallIntegerField()
+    class Meta:
+        unique_together = ('user', 'product')
