@@ -2,16 +2,10 @@
 
 
 from django.contrib import admin
-from information.models import Information, Schedule
-
-
-#class ScheduleInline(admin.TabularInline):
-class ScheduleInline(admin.StackedInline):
-    model = Schedule
+from information.models import Information
 
 
 class InfoAdmin(admin.ModelAdmin):
-    inlines = [ScheduleInline]
-
+    pass
 
 admin.site.register(Information, InfoAdmin)

@@ -12,9 +12,7 @@ class Information(models.Model):
     )
     announce = models.TextField()
 
-
-class Schedule(models.Model):
-    info = models.OneToOneField( Information, primary_key=True )
+    # Schedule
     location = models.CharField( max_length=20 )
     order_st = models.DateField()
     order_ed = models.DateField()
