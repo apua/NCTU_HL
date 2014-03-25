@@ -12,7 +12,7 @@ class Product(models.Model):
     expiration = models.SmallIntegerField()
 
 
-class Order(models.Model):
+class Record(models.Model):
     user = models.ForeignKey('auth.User')
     product = models.ForeignKey('shopping_cart.Product')
     amount = models.SmallIntegerField()
