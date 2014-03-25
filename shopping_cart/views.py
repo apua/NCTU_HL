@@ -10,10 +10,10 @@ def list_product(request):
     return HttpResponse('list_product')
 
 
-@login_required(login_url='/signup/')
+@login_required(login_url='/login/')
 def order(request):
     return HttpResponse('order')
 
 
-def signup(request):
-    return HttpResponse('signup')
+def login_signup(request):
+    return HttpResponse('login_signup')
