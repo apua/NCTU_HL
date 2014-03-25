@@ -1,15 +1,55 @@
-<h2>Schedule</h2>
-<p>location:{{ object.location }}</p>
-<p>order_st:{{ object.order_st }}</p>
-<p>order_ed:{{ object.order_ed }}</p>
-<p>alter_st:{{ object.alter_st }}</p>
-<p>alter_ed:{{ object.alter_ed }}</p>
-<p>booth_st:{{ object.booth_st }}</p>
-<p>booth_ed:{{ object.booth_ed }}</p>
-<p>range1st:{{ object.range1st }}</p>
-<p>range2nd:{{ object.range2nd }}</p>
+{% extends "base.html" %}
 
-<h2>Announce</h2>
-<p>announce:{{ object.announce }}</p>
+{% block title %}{% endblock %}
+
+{% block content %}
+<table id="main-table">
+    <caption>各項活動時間表</caption>
+    <thead>
+        <tr>
+            <th></th>
+            <th>開始時間</th>
+            <th>結束時間</th>
+            <th>地點</th>
+            <th>備註</th>
+        </tr>
+    </thead>
+    <tfoot><tr></tr></tfoot> <!-- ref:http://www.w3ctutorial.com/html5-tags/tag-tfoot -->
+    <tbody>
+        <tr>
+            <th>網路預購</th>
+            <td>{{ object.order_st }}</td>
+            <td>{{ object.order_ed }}</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>更改預購訂單</th>
+            <td>{{ object.alter_st }}</td>
+            <td>{{ object.alter_ed }}</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>現場擺攤</th>
+            <td>{{ object.booth_st }}</td>
+            <td>{{ object.booth_ed }}</td>
+            <td>{{ object.location }}</td>
+            <td>{{ object.range1st }}{{ object.range2nd }}</td>
+        </tr>
+        <tr>
+            <td colspan="5">{{ object.announce }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="">[名產介紹]</a></td>
+            <td><a href="">[網路訂購]</a></td>
+            <td><a href="">[查詢訂購]</a></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
 <p>contact_email:{{ object.contact_email }}</p>
 <p>last_update:{{ object.last_update }}</p>
+{% endblock %}
