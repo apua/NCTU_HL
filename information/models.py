@@ -1,14 +1,11 @@
 # -*- coding=utf8 -*-
-
-
 from django.db import models
-
 
 class Information(models.Model):
     contact_email = models.EmailField()
     last_update = models.DateTimeField(
         auto_now = True, 
-        auto_now_add = True
+        auto_now_add = True,
     )
     announce = models.TextField()
 
