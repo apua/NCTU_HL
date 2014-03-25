@@ -1,11 +1,6 @@
 # -*- coding=utf8 -*-
 
-
 from django.contrib import admin
-from information.models import Information
+from information.models import Information as Info
 
-
-class InfoAdmin(admin.ModelAdmin):
-    pass
-
-admin.site.register(Information, InfoAdmin)
+admin.site.register(Info)

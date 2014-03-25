@@ -1,14 +1,11 @@
 # -*- coding=utf8 -*-
 
-
 from django.contrib import admin
-from shopping_cart.models import Product, Record, Contact
 
+import inspect
+import shopping_cart.models as M
+from django.db.models.base import ModelBase
 
-class ProductAdmin(admin.ModelAdmin): pass
-class RecordAdmin(admin.ModelAdmin): pass
-class ContactAdmin(admin.ModelAdmin): pass
-
-admin.site.register(Product, ProductAdmin)
-admin.site.register(Record, RecordAdmin)
-admin.site.register(Contact, ContactAdmin)
+for name, member in inspect.getmembers(M):
+    if inspect.isclass(member) and isinstance(member, ModelBase):
+        admin.site.register(member)
