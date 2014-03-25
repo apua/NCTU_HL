@@ -6,6 +6,7 @@ admin.autodiscover()
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from information.models import Information as Info
+from shopping_cart.models import Product
 
 urlpatterns = patterns('',
     # Examples:
@@ -19,9 +20,13 @@ urlpatterns = patterns('',
         kwargs={'pk':1},
         name='index',
     ),
-    #url(r'^$', 'information.views.home'),
+    url(r'^products/',
+        ListView.as_view( model=Product ),
+        name='products',
+    ),
 
-    url(r'^products/', 'shopping_cart.views.list_product'),
+    #url(r'^$', 'information.views.home'),
+    #url(r'^products/', 'shopping_cart.views.list_product'),
     url(r'^order/', 'shopping_cart.views.order'),
     url(r'^signup/','shopping_cart.views.signup'),
 )

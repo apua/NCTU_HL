@@ -1,0 +1,31 @@
+<table border="1"><!-- 在 HTML 5 中，不支持 <table> 標簽的任何屬性 -->
+    <caption>Product List</caption><!-- (表格標題) -->
+    <thead>
+        <tr>
+            <th>name      </th>
+            <th>price     </th>
+            <th>picture   </th>
+            <th>desciption</th>
+            <th>expiration</th>
+        </tr>
+    </thead>
+    <tfoot><tr></tr></tfoot> <!-- ref:http://www.w3ctutorial.com/html5-tags/tag-tfoot -->
+    <tbody>
+    {% for product in object_list %}
+        <tr>
+            <td>{{ product.name      }}</td>
+            <td>{{ product.price     }}</td>
+            <td>{{ product.picture   }}</td>
+            <td>{{ product.desciption}}</td>
+            <td>{{ product.expiration}}</td>
+        </tr>
+    {% empty %}
+         <tr><td colspan="5">No product yet.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+
