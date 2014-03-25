@@ -13,7 +13,3 @@ def list_product(request):
 @login_required(login_url='/login/')
 def order(request):
     return HttpResponse('order')
-
-
-def login_signup(request):
-    return HttpResponse('login_signup')
