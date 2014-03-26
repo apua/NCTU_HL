@@ -1,0 +1,47 @@
+<!-- ref:
+    http://stackoverflow.com/questions/4990300/is-it-possible-to-use-a-caption-tag-in-a-form
+    http://www.w3.org/wiki/HTML/Elements/legend
+-->
+<fieldset>
+    <legend>Order Form of {{user.username}}</legend>
+    <form method="post">
+        {% csrf_token %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>product</th>
+                    <th>price</th>
+                    <th>amount</th>
+                    <th>count</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for id, name, price, amount in order %}
+                <tr>
+                    <!-- used label for amount input -->
+                    <td><label for="p_{{id}}">{{name}}</label></td>
+                    <td><label for="p_{{id}}">{{price}}</label></td>
+                    <td><input type="number" id="p_{{id}}" name="p_{{id}}"
+                               min="0" value="{{amount}}" /></td>
+                    <td><input type="number" value="0" /></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">total</td>
+                    <td><input type="number" value="0" /></td>
+                </tr>
+            </tfoot>
+        </table>   
+
+    <ul>
+<li>User: {{user.email}}
+{{contact_form.as_ul}}
+    </ul>
+
+    <input type="submit" />
+
+    </form>
+</fieldset>
