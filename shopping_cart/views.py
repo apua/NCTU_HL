@@ -11,11 +11,10 @@ def order(request):
 
     if request.method=='POST':
         return HttpResponse(">//////<")
-
     else:
         user = request.user
         contact = Contact.objects.get_or_None(user=user)
-        order = Product.objects.get_amount_list(model=Record, user=user)
+        order = Record.objects.get_amount_list(user=user)
         context = {
             'order': order,#.order_by('id'),
             'contact_form': ContactForm(instance=contact),

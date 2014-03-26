@@ -7,13 +7,14 @@ from django.core.validators import RegexValidator
 from django.core.exceptions import ObjectDoesNotExist
 
 
-class ProductManager(models.Manager):
-    def get_amount_list(self, model, user):
-        D = {r.product: r.amount for r in model.objects.filter(user=user)}
-        print D
-        A = [(p.id, p.name, p.price, D.get(p,0)) for p in self.all()]
-        print A
+class RecordManager(models.Manager):
+    def get_amount_list(self, user):
+        D = {r.product: r.amount for r in self.filter(user=user)}
+        A = [(p.id, p.name, p.price, D.get(p,0)) for p in Product.objects.all()]
         return A
+    def save_amount_list(self, query_dict):
+        #D = {k:v for k,v in query_dict.iteritems() if 'p_' in k}
+        return None
 
 
 class Product(models.Model):
@@ -22,7 +23,6 @@ class Product(models.Model):
     picture = models.ImageField( upload_to='./upload' )
     desciption = models.TextField()
     expiration = models.PositiveSmallIntegerField()
-    objects = ProductManager()
 
 
 class Record(models.Model):
@@ -31,6 +31,7 @@ class Record(models.Model):
     amount = models.PositiveSmallIntegerField()
     class Meta:
         unique_together = ('user', 'product')
+    objects = RecordManager()
 
 
 class ContactManager(models.Manager):
