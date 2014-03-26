@@ -1,15 +1,24 @@
 # -*- coding=utf8 -*-
 
-
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
-
-def list_product(request):
-    return HttpResponse('list_product')
-
+from shopping_cart.models import Product, Record, Contact, ContactForm
 
 @login_required(login_url='/login/')
 def order(request):
-    return HttpResponse('order')
+
+    if request.method=='POST':
+        return HttpResponse(">//////<")
+
+    else:
+        user = request.user
+        records = Record.objects.filter(user=user)
+        context = {
+            'records': records,
+            'order': [ (p.id, p.name, p.price, records.get(product=p).amount)
+                       for p in Product.objects.order_by('id') ],
+            'contact_form': ContactForm(),
+        }
+        return render(request, 'shopping_cart/order_form.html', context)

@@ -2,6 +2,7 @@
 
 
 from django.db import models
+from django.forms import ModelForm
 from django.core.validators import RegexValidator
 
 
@@ -58,3 +59,10 @@ class Contact(models.Model):
             ),
         ],
     )
+
+
+class ContactForm(ModelForm):
+    class Meta:
+        model = Contact
+        #fields = '__all__'
+        fields = ['dorm','room','phone']
