@@ -10,6 +10,7 @@ from shopping_cart.models import Product, Record, Contact, ContactForm
 def order(request):
 
     if request.method=='POST':
+        Record.objects.save_amount_list(request.user, request.POST)
         return HttpResponse(">//////<")
     else:
         user = request.user

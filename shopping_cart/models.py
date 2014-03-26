@@ -14,9 +14,20 @@ class RecordManager(models.Manager):
         for p in order:
             p.amount = records.get(p,0)
         return order
-    def save_amount_list(self, query_dict):
-        #D = {k:v for k,v in query_dict.iteritems() if 'p_' in k}
-        return None
+
+    def save_amount_list(self, user, querydict):
+        data = [(k[2:],querydict[k]) for k in querydict if k.startswith('p_')]
+        non_order_products = {k for k,v in data if v=='0'}
+        self.filter(user=user, product_id__in=non_order_products).delete()
+        for k,v in data:
+            if v=='0': continue
+            try:
+                record = self.get(user=user, product_id=k)
+                record.amount = v
+            except Record.DoesNotExist:
+                record = Record(user=user, product_id=k, amount=v)
+            finally:
+                record.save()
 
 
 class Product(models.Model):
