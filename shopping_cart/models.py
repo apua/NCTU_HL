@@ -4,6 +4,7 @@
 from django.db import models
 from django.forms import ModelForm
 from django.core.validators import RegexValidator
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class Product(models.Model):
@@ -20,6 +21,14 @@ class Record(models.Model):
     amount = models.PositiveSmallIntegerField()
     class Meta:
         unique_together = ('user', 'product')
+
+
+class ContactManager(models.Manager):
+    def get_or_None(self, **kwargs):
+        try:
+            return self.get(**kwargs)
+        except ObjectDoesNotExist:
+            return None
 
 
 class Contact(models.Model):
@@ -59,6 +68,7 @@ class Contact(models.Model):
             ),
         ],
     )
+    objects = ContactManager()
 
 
 class ContactForm(ModelForm):
