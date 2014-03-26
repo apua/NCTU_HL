@@ -9,9 +9,11 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class RecordManager(models.Manager):
     def get_amount_list(self, user):
-        D = {r.product: r.amount for r in self.filter(user=user)}
-        A = [(p.id, p.name, p.price, D.get(p,0)) for p in Product.objects.all()]
-        return A
+        order = Product.objects.all()
+        records = {r.product: r.amount for r in self.filter(user=user)}
+        for p in order:
+            p.amount = records.get(p,0)
+        return order
     def save_amount_list(self, query_dict):
         #D = {k:v for k,v in query_dict.iteritems() if 'p_' in k}
         return None

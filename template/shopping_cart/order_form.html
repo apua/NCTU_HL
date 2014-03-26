@@ -17,7 +17,8 @@
                 </tr>
             </thead>
             <tbody>
-            {% for id, name, price, amount in order %}
+            {% for p in order %}
+            {% with id=p.id name=p.name price=p.price amount=p.amount %}
                 <tr>
                     <!-- used label for amount input -->
                     <td><label for="p_{{id}}">{{name}}</label></td>
@@ -26,6 +27,7 @@
                                min="0" value="{{amount}}" /></td>
                     <td><input type="number" value="0" /></td>
                 </tr>
+            {% endwith %}
             {% endfor %}
             </tbody>
             <tfoot>
