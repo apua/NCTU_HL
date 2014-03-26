@@ -65,4 +65,5 @@ class ContactForm(ModelForm):
     class Meta:
         model = Contact
         #fields = '__all__'
-        fields = ['dorm','room','phone']
+        #fields = ['dorm','room','phone']
+        exclude = ['user']
