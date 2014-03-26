@@ -15,11 +15,9 @@ def order(request):
     else:
         user = request.user
         contact = Contact.objects.get_or_None(user=user)
-        records = Record.objects.filter(user=user)
+        order = Product.objects.get_amount_list(model=Record, user=user)
         context = {
-            'records': records,
-            'order': [ (p.id, p.name, p.price, records.get(product=p).amount)
-                       for p in Product.objects.order_by('id') ],
+            'order': order,#.order_by('id'),
             'contact_form': ContactForm(instance=contact),
         }
         return render(request, 'shopping_cart/order_form.html', context)

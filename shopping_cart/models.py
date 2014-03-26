@@ -7,12 +7,22 @@ from django.core.validators import RegexValidator
 from django.core.exceptions import ObjectDoesNotExist
 
 
+class ProductManager(models.Manager):
+    def get_amount_list(self, model, user):
+        D = {r.product: r.amount for r in model.objects.filter(user=user)}
+        print D
+        A = [(p.id, p.name, p.price, D.get(p,0)) for p in self.all()]
+        print A
+        return A
+
+
 class Product(models.Model):
     name = models.CharField( max_length=30 )
     price = models.PositiveSmallIntegerField()
     picture = models.ImageField( upload_to='./upload' )
     desciption = models.TextField()
     expiration = models.PositiveSmallIntegerField()
+    objects = ProductManager()
 
 
 class Record(models.Model):
