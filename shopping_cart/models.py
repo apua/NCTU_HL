@@ -54,9 +54,14 @@ class ContactManager(models.Manager):
         except ObjectDoesNotExist:
             return None
 
+    def create_or_update(self, user, form):
+        ins = form.save(commit=False)
+        ins.user = user
+        ins.save()
+
 
 class Contact(models.Model):
-    user = models.OneToOneField('auth.User')
+    user = models.OneToOneField('auth.User', primary_key=True)
     dorm = models.PositiveSmallIntegerField(
         choices=(
             (85, u'竹軒'),
