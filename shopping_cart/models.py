@@ -16,18 +16,13 @@ class RecordManager(models.Manager):
         return order
 
     def save_amount_list(self, user, querydict):
-        data = [(k[2:],querydict[k]) for k in querydict if k.startswith('p_')]
-        non_order_products = {k for k,v in data if v=='0'}
+        data = {k[2:]:querydict[k] for k in querydict if k.startswith('p_')}
+        non_order_products = {k for k in data if data[k]=='0'}
         self.filter(user=user, product_id__in=non_order_products).delete()
-        for k,v in data:
-            if v=='0': continue
-            try:
-                record = self.get(user=user, product_id=k)
-                record.amount = v
-                record.save()
-            except Record.DoesNotExist:
-                record = self.create(user=user, product_id=k, amount=v)
-                record.save()
+        for k in data.viewkeys()-non_order_products:
+            record, created = self.get_or_create(user=user, product_id=k)
+            record.amount = data[k]
+            record.save()
 
 
 class Product(models.Model):
@@ -41,7 +36,7 @@ class Product(models.Model):
 class Record(models.Model):
     user = models.ForeignKey('auth.User')
     product = models.ForeignKey('shopping_cart.Product')
-    amount = models.PositiveSmallIntegerField()
+    amount = models.PositiveSmallIntegerField(default=0)
     class Meta:
         unique_together = ('user', 'product')
     objects = RecordManager()
