@@ -2,10 +2,10 @@
     http://stackoverflow.com/questions/4990300/is-it-possible-to-use-a-caption-tag-in-a-form
     http://www.w3.org/wiki/HTML/Elements/legend
 -->
-<fieldset>
-    <legend>Order Form of {{user.username}}</legend>
-    <form method="post">
-        {% csrf_token %}
+<form method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Order Form of {{user.username}}</legend>
 
         <table>
             <thead>
@@ -43,7 +43,6 @@
 {{contact_form.as_ul}}
     </ul>
 
+    </fieldset>
     <input type="submit" />
-
-    </form>
-</fieldset>
+</form>
