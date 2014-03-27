@@ -26,7 +26,8 @@ class RecordManager(models.Manager):
                 record.amount = v
                 record.save()
             except Record.DoesNotExist:
-                Record(user=user, product_id=k, amount=v).save()
+                record = self.create(user=user, product_id=k, amount=v)
+                record.save()
 
 
 class Product(models.Model):
