@@ -3,10 +3,11 @@
     http://www.w3.org/wiki/HTML/Elements/legend
 -->
 <form method="post">
-    {% csrf_token %}
-    <fieldset>
-        <legend>Order Form of {{user.username}}</legend>
 
+  <fieldset>
+    {% csrf_token %}
+
+    <fieldset><legend>Order of {{user.username}}</legend>
         <table>
             <thead>
                 <tr>
@@ -37,12 +38,16 @@
                 </tr>
             </tfoot>
         </table>   
+    </fieldset>
 
-    <ul>
+    <fieldset><legend>Contact of {{user.username}}</legend>
+        <ul>
 <li>User: {{user.email}}
 {{contact_form.as_ul}}
-    </ul>
-
+        </ul>
     </fieldset>
+
     <input type="submit" />
+  </fieldset>
+
 </form>
