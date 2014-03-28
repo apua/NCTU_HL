@@ -59,6 +59,7 @@ class Contact(models.Model):
     user = models.OneToOneField('auth.User', primary_key=True)
     dorm = models.PositiveSmallIntegerField(
         choices=(
+            ( 0, u'外宿'),
             (85, u'竹軒'),
             (88, u'女二'),
             (77, u'七舍'),
