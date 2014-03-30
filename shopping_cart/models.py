@@ -41,19 +41,6 @@ class Record(models.Model):
     objects = RecordManager()
 
 
-class ContactManager(models.Manager):
-    def get_or_None(self, **kwargs):
-        try:
-            return self.get(**kwargs)
-        except ObjectDoesNotExist:
-            return None
-
-    def create_or_update(self, user, form):
-        ins = form.save(commit=False)
-        ins.user = user
-        ins.save()
-
-
 class Contact(models.Model):
     user = models.OneToOneField('auth.User', primary_key=True)
     dorm = models.PositiveSmallIntegerField(
@@ -92,4 +79,3 @@ class Contact(models.Model):
             ),
         ],
     )
-    objects = ContactManager()
