@@ -15,7 +15,7 @@ def order(request):
     template = os.path.join(app_dir, 'order_form.html')
 
     if request.method=='POST':
-        contact_form = ContactForm(request.POST)
+        contact_form = ContactForm(request.POST, prefix='contact')
         if contact_form.is_valid():
             ins = contact_form.save(commit=False)
             ins.user = user
@@ -24,7 +24,7 @@ def order(request):
         order = Record.objects.get_amount_list(user=user)
     else:
         contact = Contact.objects.get_or_None(user=user)
-        contact_form = ContactForm(instance=contact)
+        contact_form = ContactForm(instance=contact, prefix='contact')
         order = Record.objects.get_amount_list(user=user)
 
     context = {
