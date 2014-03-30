@@ -7,11 +7,11 @@
   <fieldset>
     {% csrf_token %}
 
-    <fieldset><legend>Order of {{user.username}}</legend>
+    <fieldset><legend>Amount of {{user.email}}</legend>
         {% include amount_template %}
     </fieldset>
 
-    <fieldset><legend>Contact of {{user.username}}</legend>
+    <fieldset><legend>Contact of {{user.email}}</legend>
         {% include contact_template %}
     </fieldset>
 
