@@ -4,7 +4,6 @@
 -->
 <form method="post">
 
-  <fieldset>
     {% csrf_token %}
 
     <fieldset><legend>Amount of {{user.email}}</legend>
@@ -17,6 +16,5 @@
 
     <!-- <input type="submit" value="送出"/> -->
     <button type="submit">送出</button>
-  </fieldset>
 
 </form>
