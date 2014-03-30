@@ -1,0 +1,30 @@
+<table>
+    <thead>
+        <tr>
+            <th>product</th>
+            <th>price</th>
+            <th>amount</th>
+            <th>count</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for p in order %}
+    {% with id=p.id name=p.name price=p.price amount=p.amount %}
+        <tr>
+            <!-- used label for amount input -->
+            <td><label for="p_{{id}}">{{name}}</label></td>
+            <td><label for="p_{{id}}">{{price}}</label></td>
+            <td><input type="number" id="p_{{id}}" name="p_{{id}}"
+                       min="0" value="{{amount}}" /></td>
+            <td><input type="number" value="0" /></td>
+        </tr>
+    {% endwith %}
+    {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">total</td>
+            <td><input type="number" value="0" /></td>
+        </tr>
+    </tfoot>
+</table>   
