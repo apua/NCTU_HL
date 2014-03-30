@@ -3,6 +3,7 @@
 
 from django.db import models
 from django.forms import ModelForm
+from django.forms.models import modelform_factory
 from django.core.validators import RegexValidator
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -96,9 +97,4 @@ class Contact(models.Model):
     objects = ContactManager()
 
 
-class ContactForm(ModelForm):
-    class Meta:
-        model = Contact
-        #fields = '__all__'
-        #fields = ['dorm','room','phone']
-        exclude = ['user']
+ContactForm = modelform_factory(Contact, exclude=['user'])
