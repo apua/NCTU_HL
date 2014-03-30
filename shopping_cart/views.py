@@ -5,14 +5,17 @@ import os
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.forms.models import modelform_factory, modelformset_factory
 
-from shopping_cart.models import Product, Record, Contact, ContactForm
+from shopping_cart.models import Product, Record, Contact
+
 
 @login_required(login_url='/login/')
 def order(request):
     user = request.user
     app_dir = 'shopping_cart'
     template = os.path.join(app_dir, 'order_form.html')
+    ContactForm = modelform_factory(Contact, exclude=['user'])
 
     if request.method=='POST':
         contact_form = ContactForm(request.POST, prefix='contact')
@@ -23,8 +26,11 @@ def order(request):
             Record.objects.save_amount_list(user, request.POST)
         order = Record.objects.get_amount_list(user=user)
     else:
-        contact = Contact.objects.get_or_None(user=user)
-        contact_form = ContactForm(instance=contact, prefix='contact')
+        contacts = Contact.objects.filter(user=user)
+        contact_form = ContactForm(
+            instance = contacts[0] if contacts else None,
+            prefix = 'contact',
+            )
         order = Record.objects.get_amount_list(user=user)
 
     context = {
