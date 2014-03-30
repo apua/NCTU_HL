@@ -58,7 +58,7 @@ class Contact(models.Model):
             (84, u'研一'),
             (87, u'研二'),
         ),
-    )
+        )
     room = models.CharField(
         max_length=3,
         validators=[
@@ -68,7 +68,7 @@ class Contact(models.Model):
                 'invalid room number'
             ),
         ],
-    )
+        )
     phone = models.CharField(
         max_length=15,
         validators=[
@@ -78,4 +78,4 @@ class Contact(models.Model):
                 'invalid phone number'
             ),
         ],
-    )
+        )

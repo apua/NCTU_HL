@@ -38,5 +38,5 @@ def order(request):
         'contact_form': contact_form,
         'contact_template': os.path.join(app_dir,'contact_form.html'),
         'amount_template': os.path.join(app_dir,'amount_form.html'),
-    } 
+        } 
     return render(request, template, context)
