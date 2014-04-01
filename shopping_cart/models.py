@@ -3,8 +3,6 @@
 
 from django.db import models
 from django.core.validators import RegexValidator
-from django.core.exceptions import ObjectDoesNotExist
-
 
 
 class Product(models.Model):
@@ -48,8 +46,8 @@ class Contact(models.Model):
                 r'^\d{3}$',
                 u'Please enter room number with 3 digits',
                 'invalid room number'
-            ),
-        ],
+                ),
+            ],
         )
     phone = models.CharField(
         max_length=15,
@@ -58,6 +56,6 @@ class Contact(models.Model):
                 r'^(?:\+|\(\d+\))?\d+$', # +886987774141 or (07)7935560
                 u'Please enter phone number',
                 'invalid phone number'
-            ),
-        ],
+                ),
+            ],
         )
