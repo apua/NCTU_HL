@@ -19,6 +19,13 @@ class AmountForm(Form):
     amount.widget.attrs.update({'required':'required'}) # check by Chrome browser
     #amount = forms.ChoiceField(choices = [(i,i) for i in range(10)])
 
+    #def clean_amount(self):
+    #    raise ValidationError(u'(Im the amount_errors')
+
+    #def clean(self):
+    #    print self._errors
+    #    raise ValidationError(u'(Im the non_field_errors of Form')
+
 
 from django.forms.formsets import BaseFormSet, formset_factory
 
@@ -28,6 +35,8 @@ def amountformset_factory(user, amountdata, form=AmountForm):
         def __init__(self, *args, **kwargs):
             kwargs['initial'] = [{'pid': pid, 'amount': amountdata[pid]['amount']} for pid in sorted(amountdata)]
             super(AmountFormSet, self).__init__(*args, **kwargs)
+        def clean(self):
+            pass
     return AmountFormSet
 
 

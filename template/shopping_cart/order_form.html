@@ -23,6 +23,7 @@
 {{ test_formset }}
 </table>
 
+{{test_formset.non_form_errors}}
 <table border="1"><caption>Amount FormSet</caption>
     {{test_formset.management_form}}
     <tr>
@@ -33,10 +34,12 @@
     </tr>
     {% for form in test_formset %}
     <tr>
+        <td>{{form.non_field_errors}}</td>
         <td><label for="{{form.amount.id_for_label}}">{{form.informations.name}}</label></td>
         <td><label for="{{form.amount.id_for_label}}">{{form.informations.price}}</label></td>
         <td>{{form.amount}}{{form.pid}}</td>
         <td><input type="number" value="0" /></td>
+        <td>{{form.amount.errors}}</td>
     </tr>
     {% endfor %}
 </table>
