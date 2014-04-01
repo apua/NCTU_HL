@@ -38,11 +38,14 @@ def amountformset_factory(form, user, productmodel=Product, recordmodel=Record):
     records = recordmodel.objects.filter(product__in=products, user=user)
     amounts = {r.product: r.amount for r in records}
     data = [{'product': p.name, 'price':p.price, 'amount':amounts.get(p,0)} for p in products]
+    FormSet = formset_factory(AmountForm, extra=0)
 
-    formset = formset_factory(AmountForm, extra=0)
-    formset.data = data
+    class AmountFormSet(FormSet):
+        def __init__(self, *args, **kwargs):
+            kwargs['initial'] = data
+            super(AmountFormSet, self).__init__(*args, **kwargs)
 
-    return formset
+    return AmountFormSet
 
 #amountformset_factory = formset_factory
 
@@ -75,7 +78,7 @@ def order(request):
             )
         order = Record.objects.get_amount_list(user=user)
         test_form = AmountForm(prefix='a')
-        test_formset = AmountFormSet(initial=AmountFormSet.data, prefix='b')
+        test_formset = AmountFormSet(prefix='b')
 
     context = {
         'order': order,
