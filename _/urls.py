@@ -31,7 +31,7 @@ urlpatterns = patterns('',
         name='login',
         ),
     url(r'^order/$',
-        shopping_cart.views.order
+        'shopping_cart.views.order',
         name='order',
         ),
 )

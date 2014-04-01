@@ -1,5 +1,7 @@
 # -*- coding=utf8 -*-
+
 from django.db import models
+
 
 class Information(models.Model):
     contact_email = models.EmailField()
