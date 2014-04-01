@@ -13,37 +13,29 @@ from shopping_cart.models import Product, Record, Contact
 
 
 class AmountForm(Form):
-
     pid = forms.IntegerField()
-    _product_fields = fields_for_model(Product)
-    product = _product_fields['name']
-    price = _product_fields['price']
-    pid.widget.attrs.update({'readonly':'readonly'})
-    product.widget.attrs.update({'disabled':'disabled'})
-    price.widget.attrs.update({'disabled':'disabled'})
-    product.required = price.required = False
+    pid.widget.attrs.update({'hidden':'hidden'}) # hidden and POST back
+    amount = fields_for_model(Record)['amount']
+    amount.widget.attrs.update({'required':'required'}) # check by Chrome browser
+    #amount = forms.ChoiceField(choices = [(i,i) for i in range(10)])
 
-    #_record_field = fields_for_model(Record)
-    #amount = _record_field['amount']
-    #amount.widget.attrs.update({'required':'required'})
-    amount = forms.ChoiceField(choices = [(i,i) for i in range(10)])
 
 from django.forms.formsets import BaseFormSet, formset_factory
 
-def amountformset_factory(user, form=AmountForm, productmodel=Product, recordmodel=Record):
-
-    products = productmodel.objects.all() #may filte which visible
-    records = recordmodel.objects.filter(product__in=products, user=user)
-    amounts = {r.product: r.amount for r in records}
-    data = [{'pid':p.id, 'product': p.name, 'price':p.price, 'amount':amounts.get(p,0)} for p in products]
+def amountformset_factory(user, amountdata, form=AmountForm):
     FormSet = formset_factory(AmountForm, extra=0)
-
     class AmountFormSet(FormSet):
         def __init__(self, *args, **kwargs):
-            kwargs['initial'] = data
+            kwargs['initial'] = [{'pid': pid, 'amount': amountdata[pid]['amount']} for pid in sorted(amountdata)]
             super(AmountFormSet, self).__init__(*args, **kwargs)
-
     return AmountFormSet
+
+
+
+def get_amount(user):
+    records = {r.product: r.amount for r in Record.objects.filter(user=user)}
+    return { p.id: {'amount': records.get(p,0), 'name': p.name, 'price': p.price}
+             for p in Product.objects.all() }
 
 
 @login_required(login_url='/login/')
@@ -53,7 +45,12 @@ def order(request):
     template = os.path.join(app_dir, 'order_form.html')
     ContactForm = modelform_factory(Contact, exclude=['user'])
 
-    AmountFormSet = amountformset_factory(user=user)
+    # get amount data
+    _records = { r.product: r.amount for r in Record.objects.filter(user=user) }
+    _amounts = { p.id: {'amount': _records.get(p,0), 'name': p.name, 'price': p.price}
+                 for p in Product.objects.all() }
+ 
+    AmountFormSet = amountformset_factory(user=user, amountdata=_amounts)
 
     if request.method=='POST':
         print request.POST
@@ -75,13 +72,21 @@ def order(request):
         order = Record.objects.get_amount_list(user=user)
         test_formset = AmountFormSet(prefix='b')
 
+
+    # generate formset extra information
+    for form in test_formset:
+        D = _amounts[int(form['pid'].value())]
+        form.informations = {'name': D['name'], 'price': D['price']}
+    test_formset.informations = { 'product': u'PRODUCT',
+                                  'price':   u'PRICE',
+                                  'amount':  u'AMOUNT',
+                                }
+
     context = {
         'order': order,
         'contact_form': contact_form,
         'contact_template': os.path.join(app_dir,'contact_form.html'),
         'amount_template': os.path.join(app_dir,'amount_form.html'),
-        'test_form': AmountForm(initial={'pid':999}),
-        'test_list': range(10),
         'test_formset': test_formset,
         } 
     return render(request, template, context)
