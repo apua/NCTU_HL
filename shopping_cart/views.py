@@ -15,10 +15,10 @@ from shopping_cart.models import Product, Record, Contact
 class AmountForm(Form):
 
     pid = forms.IntegerField()
-
     _product_fields = fields_for_model(Product)
     product = _product_fields['name']
     price = _product_fields['price']
+    pid.widget.attrs.update({'readonly':'readonly'})
     product.widget.attrs.update({'disabled':'disabled'})
     price.widget.attrs.update({'disabled':'disabled'})
     product.required = price.required = False
@@ -27,8 +27,6 @@ class AmountForm(Form):
     #amount = _record_field['amount']
     #amount.widget.attrs.update({'required':'required'})
     amount = forms.ChoiceField(choices = [(i,i) for i in range(10)])
-
-
 
 from django.forms.formsets import BaseFormSet, formset_factory
 
@@ -75,7 +73,6 @@ def order(request):
             prefix = 'contact',
             )
         order = Record.objects.get_amount_list(user=user)
-        test_form = AmountForm(prefix='a')
         test_formset = AmountFormSet(prefix='b')
 
     context = {
@@ -83,7 +80,8 @@ def order(request):
         'contact_form': contact_form,
         'contact_template': os.path.join(app_dir,'contact_form.html'),
         'amount_template': os.path.join(app_dir,'amount_form.html'),
-        'test_form': test_form,
+        'test_form': AmountForm(initial={'pid':999}),
+        'test_list': range(10),
         'test_formset': test_formset,
         } 
     return render(request, template, context)
