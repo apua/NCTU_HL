@@ -6,23 +6,6 @@ from django.core.validators import RegexValidator
 from django.core.exceptions import ObjectDoesNotExist
 
 
-class RecordManager(models.Manager):
-    def get_amount_list(self, user):
-        order = Product.objects.all()
-        records = {r.product: r.amount for r in self.filter(user=user)}
-        for p in order:
-            p.amount = records.get(p,0)
-        return order
-
-    def save_amount_list(self, user, querydict):
-        data = {k[2:]:querydict[k] for k in querydict if k.startswith('p_')}
-        non_order_products = {k for k in data if data[k]=='0'}
-        self.filter(user=user, product_id__in=non_order_products).delete()
-        for k in data.viewkeys()-non_order_products:
-            record, created = self.get_or_create(user=user, product_id=k)
-            record.amount = data[k]
-            record.save()
-
 
 class Product(models.Model):
     name = models.CharField( max_length=30 )
@@ -38,7 +21,6 @@ class Record(models.Model):
     amount = models.PositiveSmallIntegerField(default=0)
     class Meta:
         unique_together = ('user', 'product')
-    objects = RecordManager()
 
 
 class Contact(models.Model):

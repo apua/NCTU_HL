@@ -6,7 +6,6 @@
 
     {% csrf_token %}
 
-{% comment %}
     <fieldset><legend>Amount of {{user.email}}</legend>
         {% include amount_template %}
     </fieldset>
@@ -14,37 +13,9 @@
     <fieldset><legend>Contact of {{user.email}}</legend>
         {% include contact_template %}
     </fieldset>
-{% endcomment %}
 
     <!-- <input type="submit" value="送出"/> -->
     <button type="submit">送出</button>
-
-{% comment %}
-<table><caption>Amount FormSet Test</caption>
-{{ test_formset }}
-</table>
-{% endcomment %}
-
-{{test_formset.non_form_errors}}
-<table border="1"><caption>Amount FormSet</caption>
-    {{test_formset.management_form}}
-    <tr>
-        <th>{{test_formset.informations.product}}</th>
-        <th>{{test_formset.informations.price}}</th>
-        <th>{{test_formset.informations.amount}}</th>
-        <th>COUNT</th>
-    </tr>
-    {% for form in test_formset %}
-    <tr>
-        <td>{{form.non_field_errors}}</td>
-        <td><label for="{{form.amount.id_for_label}}">{{form.informations.name}}</label></td>
-        <td><label for="{{form.amount.id_for_label}}">{{form.informations.price}}</label></td>
-        <td>{{form.amount}}{{form.pid}}</td>
-        <td><input type="number" value="0" /></td>
-        <td>{{form.amount.errors}}</td>
-    </tr>
-    {% endfor %}
-</table>
 
 </form>
 

@@ -4,28 +4,29 @@ import os
 
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 from django import forms
-from django.forms import Form, fields_for_model, ValidationError
+from django.forms.formsets import formset_factory
 from django.forms.models import modelform_factory
-from django.forms.formsets import BaseFormSet, formset_factory
 
-from shopping_cart.models import Product, Record, Contact
+from models import Product, Record, Contact
 
 
-class AmountForm(Form):
+class AmountForm(forms.Form):
     pid = forms.IntegerField()
     pid.widget.attrs.update({'hidden':'hidden'}) # hidden and POST back
-    amount = fields_for_model(Record)['amount']
-    amount.widget.attrs.update({'required':'required'}) # check by Chrome browser
-    #amount = forms.ChoiceField(choices = [(i,i) for i in range(10)])
+    #amount = forms.fields_for_model(Record)['amount']
+    #amount.widget.attrs.update({'required':'required'}) # check by Chrome browser
+    amount = forms.ChoiceField(choices = [(i,i) for i in range(10)])
 
 
 def amountformset_factory(user, amountdata, form=AmountForm):
+    """
+    """
     FormSet = formset_factory(AmountForm, extra=0)
 
     class AmountFormSet(FormSet):
-
+        """
+        """
         def __init__(self, *args, **kwargs):
             kwargs['initial'] = [{'pid': pid, 'amount': amountdata[pid]['amount']} for pid in sorted(amountdata)]
             super(AmountFormSet, self).__init__(*args, **kwargs)
@@ -34,6 +35,8 @@ def amountformset_factory(user, amountdata, form=AmountForm):
             pass
 
         def save(self, commit=True):
+            """
+            """
             changed_data = {
                 int(form.cleaned_data['pid']):int(form.cleaned_data['amount'])
                 for form in self.initial_forms
@@ -58,74 +61,55 @@ def amountformset_factory(user, amountdata, form=AmountForm):
                 for obj in instances: obj.save()
 
             return instances
-            
 
     return AmountFormSet
 
 
-
-def get_amount(user):
-    records = {r.product: r.amount for r in Record.objects.filter(user=user)}
-    return { p.id: {'amount': records.get(p,0), 'name': p.name, 'price': p.price}
-             for p in Product.objects.all() }
-
-
 @login_required(login_url='/login/')
 def order(request):
-    user = request.user
-    app_dir = 'shopping_cart'
-    template = os.path.join(app_dir, 'order_form.html')
-    ContactForm = modelform_factory(Contact, exclude=['user'])
 
+    # define template location
+    template =         os.path.join(__package__,'order_form.html')
+    contact_template = os.path.join(__package__,'contact_form.html')
+    amount_template =  os.path.join(__package__,'amount_form.html')
+
+    user = request.user
     # get amount data
     _records = { r.product: r.amount for r in Record.objects.filter(user=user) }
     _amounts = { p.id: {'amount': _records.get(p,0), 'name': p.name, 'price': p.price}
                  for p in Product.objects.all() }
  
+    # generate form/formset class
+    ContactForm = modelform_factory(Contact, exclude=['user'])
     AmountFormSet = amountformset_factory(user=user, amountdata=_amounts)
 
     if request.method=='POST':
-        #print request.POST
         contact_form = ContactForm(request.POST, prefix='contact')
-        if contact_form.is_valid():
+        amount_formset = AmountFormSet(request.POST, prefix='b')
+        if contact_form.is_valid() and amount_formset.is_valid():
+            # save contact form
             ins = contact_form.save(commit=False)
             ins.user = user
             ins.save()
-            Record.objects.save_amount_list(user, request.POST)
-        order = Record.objects.get_amount_list(user=user)
-        test_form = AmountForm(request.POST, prefix='a')
-        test_formset = AmountFormSet(request.POST, prefix='b')
-
-        #for idx, form in enumerate(test_formset):
-        #    print idx, form.has_changed(), form.changed_data
-
-        if test_formset.is_valid():
-            test_formset.save()
-
+            # save amount form set
+            amount_formset.save()
     else:
         contacts = Contact.objects.filter(user=user)
-        contact_form = ContactForm(
-            instance = contacts[0] if contacts else None,
-            prefix = 'contact',
-            )
-        order = Record.objects.get_amount_list(user=user)
-        test_formset = AmountFormSet(prefix='b')
+        contact_form = ContactForm(instance=contacts[0] if contacts else None, prefix='contact')
+        amount_formset = AmountFormSet(prefix='b')
 
-
-    # generate formset extra information
-    for form in test_formset:
+    # generate formset supplementary information
+    for form in amount_formset:
         D = _amounts[int(form['pid'].value())]
-        form.informations = {'name': D['name'], 'price': D['price']}
-    test_formset.informations = { 'product': u'PRODUCT',
-                                  'price':   u'PRICE',
-                                  'amount':  u'AMOUNT',
-                                }
+        form.supinfo= {'name': D['name'], 'price': D['price']}
+    amount_formset.supinfo = { 'product': u'PRODUCT',
+                               'price':   u'PRICE',
+                               'amount':  u'AMOUNT',  }
 
     context = {
-        'order': order,
         'contact_form': contact_form,
-        'contact_template': os.path.join(app_dir,'contact_form.html'),
-        'amount_template': os.path.join(app_dir,'amount_form.html'),
-        'test_formset': test_formset,
+        'amount_formset': amount_formset,
+        'contact_template': os.path.join(__package__,'contact_form.html'),
+        'amount_template': os.path.join(__package__,'amount_form.html'),
         } 
     return render(request, template, context)
