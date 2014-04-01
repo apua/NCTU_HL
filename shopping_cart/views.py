@@ -26,7 +26,7 @@ class AmountForm(Form):
     price.widget.attrs.update({'disabled':'disabled'})
     amount.widget.attrs.update({'required':'required'})
 
-    product.required = price.required = amount.required = False
+    product.required = price.required = False
 
 from django.forms.formsets import BaseFormSet, formset_factory
 
