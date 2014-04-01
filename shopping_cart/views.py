@@ -14,19 +14,21 @@ from shopping_cart.models import Product, Record, Contact
 
 class AmountForm(Form):
 
-    _product_fields = fields_for_model(Product)
-    _record_field = fields_for_model(Record)
-
     pid = forms.IntegerField()
+
+    _product_fields = fields_for_model(Product)
     product = _product_fields['name']
     price = _product_fields['price']
-    amount = _record_field['amount']
-
     product.widget.attrs.update({'disabled':'disabled'})
     price.widget.attrs.update({'disabled':'disabled'})
-    amount.widget.attrs.update({'required':'required'})
-
     product.required = price.required = False
+
+    #_record_field = fields_for_model(Record)
+    #amount = _record_field['amount']
+    #amount.widget.attrs.update({'required':'required'})
+    amount = forms.ChoiceField(choices = [(i,i) for i in range(10)])
+
+
 
 from django.forms.formsets import BaseFormSet, formset_factory
 
