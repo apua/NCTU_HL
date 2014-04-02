@@ -2,8 +2,7 @@
 
 
 from django.db import models
-from django.core.validators import RegexValidator
-
+from django.core.validators import RegexValidator 
 
 class Product(models.Model):
     name = models.CharField( max_length=30 )
@@ -16,7 +15,7 @@ class Product(models.Model):
 class Record(models.Model):
     user = models.ForeignKey('auth.User')
     product = models.ForeignKey('shopping_cart.Product')
-    amount = models.PositiveSmallIntegerField(default=0)
+    amount = models.PositiveSmallIntegerField()
     class Meta:
         unique_together = ('user', 'product')
 
@@ -53,7 +52,7 @@ class Contact(models.Model):
         max_length=15,
         validators=[
             RegexValidator(
-                r'^(?:\+|\(\d+\))?\d+$', # +886987774141 or (07)7935560
+                r'^(?:\+|\(\d+\))?[\d\- .]+$', # +886987774141 or (07)7935560 or 07-7935560
                 u'Please enter phone number',
                 'invalid phone number'
                 ),
