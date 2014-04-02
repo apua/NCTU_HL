@@ -58,7 +58,7 @@ def amountformset_factory(user, amountdata, form=AmountForm):
 
             existingPid = set(sum(existingIns.values_list('product_id'),()))
             toZeroPid = {pid for pid in changedData if changedData[pid]==0}
-            updatedPid = existingPid - toZeroPid
+            updatedPid = changedData.viewkeys() - toZeroPid
             newPid = changedData.viewkeys() - existingPid
             print 'existingPid',existingPid
             print 'toZeroPid',toZeroPid
