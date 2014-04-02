@@ -45,13 +45,10 @@ def amountformset_factory(user, amountdata, form=AmountForm):
                 int(form.cleaned_data['pid']):int(form.cleaned_data['amount'])
                 for form in self if form.has_changed()
             }
-            print 'changeData:',changedData
             if not changedData:
-                print 'nothing change'
                 return []
             existingIns = Record.objects.filter(user=user)
             if not existingIns:
-                print 'no record and create all'
                 obj_constuct = Record.objects.create if commit else Record
                 return [obj_constuct(user=user,product_id=pid,amount=amount)
                         for pid,amount in changedData.items()]
@@ -60,10 +57,6 @@ def amountformset_factory(user, amountdata, form=AmountForm):
             toZeroPid = {pid for pid in changedData if changedData[pid]==0}
             updatedPid = changedData.viewkeys() - toZeroPid
             newPid = changedData.viewkeys() - existingPid
-            print 'existingPid',existingPid
-            print 'toZeroPid',toZeroPid
-            print 'updatedPid',updatedPid
-            print 'newPid',newPid
 
             deletedIns = existingIns.filter(product_id__in=toZeroPid)
             updatedIns = existingIns.filter(product_id__in=updatedPid)
