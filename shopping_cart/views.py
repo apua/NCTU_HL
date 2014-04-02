@@ -28,7 +28,10 @@ def amountformset_factory(user, amountdata, form=AmountForm):
         """
         """
         def __init__(self, *args, **kwargs):
-            kwargs['initial'] = [{'pid': pid, 'amount': amountdata[pid]['amount']} for pid in sorted(amountdata)]
+            kwargs['initial'] = [
+                #{'pid': pid, 'amount': amountdata[pid]['amount']}
+                {'pid': pid, 'amount': unicode(amountdata[pid]['amount'])}
+                for pid in sorted(amountdata)]
             super(AmountFormSet, self).__init__(*args, **kwargs)
 
         def clean(self):
@@ -37,28 +40,45 @@ def amountformset_factory(user, amountdata, form=AmountForm):
         def save(self, commit=True):
             """
             """
-            changed_data = {
+            self.deleted = []
+            changedData = {
                 int(form.cleaned_data['pid']):int(form.cleaned_data['amount'])
-                for form in self.initial_forms
-                if form.has_changed()
+                for form in self if form.has_changed()
             }
-
-            if not changed_data:
+            print 'changeData:',changedData
+            if not changedData:
+                print 'nothing change'
                 return []
+            existingIns = Record.objects.filter(user=user)
+            if not existingIns:
+                print 'no record and create all'
+                obj_constuct = Record.objects.create if commit else Record
+                return [obj_constuct(user=user,product_id=pid,amount=amount)
+                        for pid,amount in changedData.items()]
 
-            empty_pid = {pid for pid in changed_data if changed_data[pid]==0 }
-            deleted_objects = Record.objects.filter(user=user,product_id__in=empty_pid )
-            self.deleted_objects = [obj for obj in deleted_objects]
+            existingPid = set(sum(existingIns.values_list('product_id'),()))
+            toZeroPid = {pid for pid in changedData if changedData[pid]==0}
+            updatedPid = existingPid - toZeroPid
+            newPid = changedData.viewkeys() - existingPid
+            print 'existingPid',existingPid
+            print 'toZeroPid',toZeroPid
+            print 'updatedPid',updatedPid
+            print 'newPid',newPid
+
+            deletedIns = existingIns.filter(product_id__in=toZeroPid)
+            updatedIns = existingIns.filter(product_id__in=updatedPid)
+
+            self.deleted_objects = [obj for obj in deletedIns]
+            newIns = [Record(user=user,product_id=pid,amount=changedData[pid])
+                      for pid in newPid]
+            updatedIns = [ins.__setattr__('amount',changedData[ins.product_id])
+                          or ins for ins in updatedIns]
+            instances = newIns + updatedIns
             
-            nonempty_pid = changed_data.viewkeys() - empty_pid
-            saved_obj = Record.objects.filter(user=user, product_id__in=nonempty_pid)
-            for obj in saved_obj: obj.amount = changed_data[obj.product_id]
-            instances = [obj for obj in saved_obj] + [Record(user=user,product_id=pid,amount=changed_data[pid])
-                for pid in nonempty_pid - {obj.product_id for obj in saved_obj}]
-
             if commit:
-                deleted_objects.delete()
-                for obj in instances: obj.save()
+                deletedIns.delete()
+                for ins in instances:
+                    ins.save()
 
             return instances
 
