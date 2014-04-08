@@ -47,8 +47,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         abstract = False
 
-    #def get_absolute_url(self):
-    #    return "/users/%s/" % urlquote(self.username)
+    def get_absolute_url(self):
+        from django.core.urlresolvers import reverse
+        return '{prefix}/user/{id}/'.format(
+            prefix=reverse('admin:app_list',kwargs={'app_label':'email_auth'}),
+            id=self.id,
+            )
 
     def get_full_name(self):
         """
