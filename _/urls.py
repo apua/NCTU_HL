@@ -7,7 +7,7 @@ from django.views.generic import ListView, DetailView
 from information.models import Information as Info
 from shopping_cart.models import Product
 
-from django.contrib.auth.views import login
+from django.contrib.auth.views import login, password_reset
 
 
 urlpatterns = patterns('',
@@ -16,6 +16,9 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^/accounts/password/reset/$', password_reset,
+        name='admin_password_reset'),
+
     url(r'^$',
         DetailView.as_view( model=Info ),
         kwargs={'pk':1},
