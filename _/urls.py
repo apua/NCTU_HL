@@ -1,13 +1,14 @@
 from django.conf.urls import patterns, include, url
+from django.conf import settings
 
 from django.contrib import admin
 admin.autodiscover()
 
+from django.contrib.auth import views
+
 from django.views.generic import ListView, DetailView
 from information.models import Information as Info
 from shopping_cart.models import Product
-
-from django.contrib.auth import views
 
 
 urlpatterns = patterns('',
@@ -47,3 +48,10 @@ urlpatterns = patterns('',
         name='order',
         ),
 )
+
+if settings.DEBUG:
+    # static files (images, css, javascript, etc.)
+    urlpatterns += patterns('',
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
+            {'document_root': settings.MEDIA_ROOT})
+    )

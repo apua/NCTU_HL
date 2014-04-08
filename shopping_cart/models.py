@@ -6,9 +6,9 @@ from django.core.validators import RegexValidator
 
 
 class Product(models.Model):
-    name = models.CharField( max_length=30 )
+    name = models.CharField(max_length=30)
     price = models.PositiveSmallIntegerField()
-    picture = models.ImageField( upload_to='./upload' )
+    picture = models.ImageField(upload_to='.')
     desciption = models.TextField()
     expiration = models.PositiveSmallIntegerField()
 
