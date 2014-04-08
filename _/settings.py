@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'shopping_cart',
     'information',
+    'email_auth',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -94,3 +95,5 @@ TEMPLATE_DIRS = (
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+AUTH_USER_MODEL = 'email_auth.User'

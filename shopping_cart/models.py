@@ -15,7 +15,7 @@ class Product(models.Model):
 
 
 class Record(models.Model):
-    user = models.ForeignKey('auth.User')
+    user = models.ForeignKey('email_auth.User')
     product = models.ForeignKey('shopping_cart.Product')
     amount = models.PositiveSmallIntegerField()
     class Meta:
@@ -23,7 +23,7 @@ class Record(models.Model):
 
 
 class Contact(models.Model):
-    user = models.OneToOneField('auth.User', primary_key=True)
+    user = models.OneToOneField('email_auth.User', primary_key=True)
     dorm = models.PositiveSmallIntegerField(
         choices=(
             ( 0, u'外宿'),
