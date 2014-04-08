@@ -90,7 +90,7 @@ def order(request):
     # get amount data
     _records = { r.product: r.amount for r in Record.objects.filter(user=user) }
     _amounts = { p.id: {'amount': _records.get(p,0), 'name': p.name, 'price': p.price}
-                 for p in Product.objects.all() }
+                 for p in Product.objects.filter(on_sale=True) }
  
     # generate form/formset class
     ContactForm = modelform_factory(Contact, exclude=['user'])
