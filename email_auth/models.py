@@ -1,3 +1,5 @@
+# -*- coding=utf8 -*-
+
 from django.contrib.auth.models import (
     AbstractBaseUser, PermissionsMixin, BaseUserManager,
     models, timezone, _,
@@ -46,6 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         abstract = False
+        verbose_name = verbose_name_plural = u'帳號'
 
     def get_full_name(self):
         """

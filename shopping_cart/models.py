@@ -1,6 +1,5 @@
 # -*- coding=utf8 -*-
 
-
 from django.db import models
 from django.core.validators import RegexValidator 
 
@@ -13,6 +12,12 @@ class Product(models.Model):
     expiration = models.PositiveSmallIntegerField(default=0)
     on_sale = models.BooleanField(default=True)
 
+    def __unicode__ (self):
+        return self.name
+
+    class Meta:
+        abstract = False
+        verbose_name = verbose_name_plural = u'產品'
 
 class Record(models.Model):
     user = models.ForeignKey('email_auth.User')
