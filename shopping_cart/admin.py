@@ -25,7 +25,7 @@ class ProductAdmin(admin.ModelAdmin):
         return False
 
     def get_amount(self, obj):
-        return Record.objects.filter(product=obj).count()
+        return sum(r.amount for r in Record.objects.filter(product=obj))
     get_amount.short_description = u'amount'
 
 
