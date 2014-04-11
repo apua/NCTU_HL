@@ -33,7 +33,7 @@ table#products-table > thead > tr > th.expiration {
 }
 
 table#products-table > tbody > tr > td.img > img {
-    width: 250px;
+    height: 250px;
 }
 
 table#products-table > tbody > tr > td.name {

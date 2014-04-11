@@ -9,7 +9,7 @@ class Product(models.Model):
     name = models.CharField(max_length=30)
     price = models.PositiveSmallIntegerField()
     picture = models.ImageField(blank=True, upload_to='.')
-    desciption = models.TextField(blank=True)
+    description = models.TextField(blank=True)
     expiration = models.PositiveSmallIntegerField(default=0)
     on_sale = models.BooleanField(default=True)
 
