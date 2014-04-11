@@ -21,7 +21,8 @@ class ProductAdmin(admin.ModelAdmin):
     # list view
     list_display = ('name','get_amount')
 
-    has_delete_permission = lambda *args: False
+    def has_delete_permission(self, request, obj=None):
+        return False
 
     def get_amount(self, obj):
         return Record.objects.filter(product=obj).count()
