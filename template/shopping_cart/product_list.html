@@ -14,7 +14,9 @@
       <th class="expiration">保存期限</th>
     </tr>
   </thead>
-  <tfoot><tr></tr></tfoot> <!-- ref:http://www.w3ctutorial.com/html5-tags/tag-tfoot -->
+  <tfoot>
+     <tr><td colspan="5"><a href="{% url "order" %}">[網路訂購]</a></td></tr>
+  </tfoot>
   <tbody>
   {% for product in object_list %}
     <tr>

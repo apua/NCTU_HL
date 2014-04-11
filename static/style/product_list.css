@@ -9,12 +9,8 @@ table#products-table > caption {
     font-size: 20px;
 }
 
-table#products-table td {
-    background: gainsboro;
-}
-
-table#products-table > thead {
-    background-color: #83cc60;
+table#products-table > thead > tr > th {
+    background-color: #C2F1AB;
 }
 
 table#products-table > thead > tr > th.name {
@@ -46,4 +42,9 @@ table#products-table > tbody > tr > td.price {
 
 table#products-table > tbody > tr > td.expiration {
     text-align: center;
+}
+
+table#products-table > tfoot > tr > td {
+    text-align: center;
+    background: rgb(216, 235, 255);
 }
