@@ -1,0 +1,44 @@
+table#products-table {
+    width: 825px;
+    border: 0px;
+    margin: auto;
+}
+
+table#products-table td {
+    background: lightgray;
+}
+
+table#products-table > thead {
+    background-color: #83cc60;
+}
+
+table#products-table > thead > tr > th.name {
+    width: 100px;
+}
+
+table#products-table > thead > tr > th.price {
+    width: 70px;
+}
+
+table#products-table > thead > tr > th.description {
+}
+
+table#products-table > thead > tr > th.expiration {
+    width: 70px;
+}
+
+table#products-table > tbody > tr > td.img > img {
+    width: 250px;
+}
+
+table#products-table > tbody > tr > td.name {
+    text-align: center;
+}
+
+table#products-table > tbody > tr > td.price {
+    text-align: center;
+}
+
+table#products-table > tbody > tr > td.expiration {
+    text-align: center;
+}
