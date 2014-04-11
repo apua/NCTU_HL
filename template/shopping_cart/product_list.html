@@ -20,9 +20,9 @@
     <tr>
       <td class="img"><img src="{{ MEDIA_URL }}{{ product.picture }}"/></td>
       <td class="name">{{ product.name }}</td>
-      <td class="price">{{ product.price }}</td>
+      <td class="price">{{ product.price }}元</td>
       <td class="description">{{ product.desciption }}</td>
-      <td class="expiration">{{ product.expiration }}</td>
+      <td class="expiration">{{ product.expiration }}天</td>
     </tr>
   {% empty %}
      <tr><td colspan="5">No product yet.</td></tr>

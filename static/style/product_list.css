@@ -2,10 +2,15 @@ table#products-table {
     width: 825px;
     border: 0px;
     margin: auto;
+    margin-bottom: 50px;
+}
+
+table#products-table > caption {
+    font-size: 20px;
 }
 
 table#products-table td {
-    background: lightgray;
+    background: gainsboro;
 }
 
 table#products-table > thead {
