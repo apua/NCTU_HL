@@ -1,3 +1,4 @@
 *.pyc
 *.sw[opqr]
 db.sqlite3
+media/*
