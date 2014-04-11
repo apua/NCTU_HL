@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh" xml:lang="zh">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>交大洄瀾週{% block title %}{% endblock %}</title>
+    <title>交大洄瀾週</title>
     <link type="text/css" href="/static/style/global.css" rel="stylesheet"/>
+    <link type="text/css" href="{% block style %}{% endblock %}" rel="stylesheet"/>
   </head>
   <body>
-    <div id="main_logo">
-      <img src="/static/img/title.png">
-    </div>
+    <a href="{% url "index" %}">
+      <div id="logo-container">
+        <img src="/static/img/title.png">
+      </div>
+    </a>
 {% block content %}
 {% endblock %}
   </body>

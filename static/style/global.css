@@ -6,7 +6,7 @@ body {
     color: #315681;
 }
 
-div#main_logo {
+div#logo-container {
     margin: 12px;
     text-align: center;
 }
@@ -26,46 +26,5 @@ a:hover {
 a:active {
     color: #FF33FF;
     text-decoration: none;
-}
-
-table#main-table {
-    width: 825px;
-    border: 0px;
-    margin: auto;
-}
-
-table#main-table td,
-table#main-table th {
-    font-size: 16px;
-    text-align: center;
-}
-
-table#main-table > caption {
-    font-weight: bold;
-    background-color: #FFCCCC;
-}
-
-table#main-table > thead > tr > th {
-    background-color: #E5FFCD;
-}
-
-table#main-table > tbody > tr > td {
-    width: 160px;
-}
-
-table#main-table > tbody > tr > th {
-    font-weight: bold;
-    color: #315681;
-    text-align: center;
-}
-
-table#main-table > tbody > tr:nth-child(even) > td,
-table#main-table > tbody > tr:nth-child(even) > th {
-    background-color: #E5FFCD;
-}
-
-table#main-table > tbody > tr:nth-child(odd) > td,
-table#main-table > tbody > tr:nth-child(odd) > th {
-    background-color: #FFE7CD;
 }
 

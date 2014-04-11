@@ -1,4 +1,9 @@
-<table border="1"><!-- 在 HTML 5 中，不支持 <table> 標簽的任何屬性 -->
+{% extends "base.html" %}
+
+{% block style %}{% endblock %}
+
+{% block content %}
+<table id="products-table"><!-- 在 HTML 5 中，不支持 <table> 標簽的任何屬性 -->
     <caption>Product List</caption><!-- (表格標題) -->
     <thead>
         <tr>
@@ -24,8 +29,4 @@
     {% endfor %}
     </tbody>
 </table>
-
-
-
-
-
+{% endblock %}
