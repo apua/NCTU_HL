@@ -29,6 +29,7 @@ UserAdmin.ordering = ()
 UserAdmin.actions = None
 UserAdmin.list_display = ('email', 'last_login', 'date_joined', 'is_staff')
 UserAdmin.list_filter = ('is_staff',)
+UserAdmin.search_fields = []
 
 # register
 ##########
