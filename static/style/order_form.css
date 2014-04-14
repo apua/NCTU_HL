@@ -1,0 +1,29 @@
+div#container {
+    width: 900px;
+    margin: auto;
+    text-align: center;
+}
+
+div#container > h4 {
+    text-align: center;
+}
+
+#order-table {
+    margin: auto;
+}
+
+ul.errorlist {
+    color: red;
+}
+
+#contact-info {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 500px;
+    text-align: left;
+}
+
+#contact-info > ul#contact-info-list {
+    list-style-type: none;
+}

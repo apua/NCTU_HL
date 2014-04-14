@@ -44,24 +44,29 @@ class Contact(models.Model):
             (84, u'研一'),
             (87, u'研二'),
         ),
-        )
+        verbose_name=u'宿舍' )
     room = models.CharField(
         max_length=3,
         validators=[
             RegexValidator(
                 r'^\d{3}$',
-                u'Please enter room number with 3 digits',
-                'invalid room number'
+                #u'Please enter room number with 3 digits',
+                u'請輸入 3 位數字的房號',
+                #u'invalid phone number'
+                u'房號不符合格式'
                 ),
             ],
-        )
+        verbose_name=u'房號' )
     phone = models.CharField(
         max_length=15,
         validators=[
             RegexValidator(
-                r'^(?:\+|\(\d+\))?[\d\- .]+$', # +886987774141 or (07)7935560 or 07-7935560
-                u'Please enter phone number',
-                'invalid phone number'
+                #r'^(?:\+|\(\d+\))?[\d\- .]+$', # +886987774141 or (07)7935560 or 07-7935560
+                r'^09\d{8}$', #09aabbbccc
+                #u'Please enter phone number',
+                u'請輸入手機號碼',
+                #u'invalid phone number'
+                u'invalid phone number'
                 ),
             ],
-        )
+        verbose_name=u'手機' )

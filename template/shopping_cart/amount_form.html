@@ -1,11 +1,11 @@
 {{amount_formset.non_form_errors}}
-<table>
+<table id="order-table">
     {{amount_formset.management_form}}
     <tr>
         <th>{{amount_formset.supinfo.product}}</th>
         <th>{{amount_formset.supinfo.price}}</th>
         <th>{{amount_formset.supinfo.amount}}</th>
-        <th>COUNT</th>
+        <th>小計</th>
     </tr>
     {% for form in amount_formset %}
     <tr>
@@ -19,4 +19,10 @@
         </td>
     </tr>
     {% endfor %}
+    <tr>
+        <td>總計</td>
+        <td></td>
+        <td></td>
+        <td><input type="number" value="0"/></td>
+    </tr>
 </table>

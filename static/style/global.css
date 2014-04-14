@@ -42,3 +42,6 @@ table > tbody > tr:nth-child(odd) > th {
     background-color: #FFE7CD;
 }
 
+#footer {
+    height: 50px;
+}

@@ -2,20 +2,30 @@
     http://stackoverflow.com/questions/4990300/is-it-possible-to-use-a-caption-tag-in-a-form
     http://www.w3.org/wiki/HTML/Elements/legend
 -->
-<form method="post">
+{% extends "base.html" %}
 
-    {% csrf_token %}
+{% block style %}/static/style/order_form.css{% endblock %}
 
-    <fieldset><legend>Amount of {{user.email}}</legend>
+{% block content %}
+
+<div id="container">
+
+    <h4>使用者 {{user.email}} 您好！</h4>
+    <h4>歡迎使用交大洄瀾週訂購系統, 請填寫欲訂購的品項</h4>
+
+    <form method="post">
+
+        {% csrf_token %}
+
         {% include amount_template %}
-    </fieldset>
 
-    <fieldset><legend>Contact of {{user.email}}</legend>
-        {% include contact_template %}
-    </fieldset>
+        <fieldset id="contact-info"><legend>{{user.email}} 連絡資訊</legend>
+            {% include contact_template %}
+        </fieldset>
 
-    <!-- <input type="submit" value="送出"/> -->
-    <button type="submit">送出</button>
+        <!-- <input type="submit" value="送出"/> -->
+        <button type="submit">送出</button>
 
-</form>
-
+    </form>
+</div>
+{% endblock %}
