@@ -98,7 +98,7 @@ def order(request):
 
     if request.method=='POST':
         contact_form = ContactForm(request.POST, prefix='contact')
-        amount_formset = AmountFormSet(request.POST, prefix='b')
+        amount_formset = AmountFormSet(request.POST, prefix='order')
         if contact_form.is_valid() and amount_formset.is_valid():
             # save contact form
             ins = contact_form.save(commit=False)
@@ -109,7 +109,7 @@ def order(request):
     else:
         contacts = Contact.objects.filter(user=user)
         contact_form = ContactForm(instance=contacts[0] if contacts else None, prefix='contact')
-        amount_formset = AmountFormSet(prefix='b')
+        amount_formset = AmountFormSet(prefix='order')
 
     # generate formset supplementary information
     for form in amount_formset:

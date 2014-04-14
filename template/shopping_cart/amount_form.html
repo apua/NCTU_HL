@@ -11,10 +11,11 @@
     <tr>
         <td><label for="{{form.amount.id_for_label}}">{{form.supinfo.name}}</label></td>
         <td><label for="{{form.amount.id_for_label}}">{{form.supinfo.price}}</label></td>
-        <td>{{form.amount}}{{form.pid}}</td>
+        <td id="select{{forloop.counter0}}">{{form.amount}}{{form.pid}}</td>
         <td>
             {{form.non_field_errors}}
-            <input type="number" value="0" />
+            <input id="price{{forloop.counter0}}" type="hidden" value="{{form.supinfo.price}}" />
+            <input id="count{{forloop.counter0}}" class="count" type="number" value="0" />
             {{form.amount.errors}}
         </td>
     </tr>
@@ -26,6 +27,6 @@
         <td>總計</td>
         <td></td>
         <td></td>
-        <td><input type="number" value="0"/></td>
+        <td><input id="total" type="number" value="0"/></td>
     </tr>
 </table>
