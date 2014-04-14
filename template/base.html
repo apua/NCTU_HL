@@ -7,14 +7,18 @@
     <link type="text/css" href="{% block style %}{% endblock %}" rel="stylesheet"/>
   </head>
   <body>
-    <a href="{% url "index" %}" title="回到首頁">
-      <div id="logo-container">
-        <img src="/static/img/title.png">
-      </div>
-    </a>
-{% block content %}
-{% endblock %}
-<div id="footer">
-</div>
+    <div id="wrapper">
+        <div id="main">
+            <a href="{% url "index" %}" title="回到首頁">
+              <div id="logo-container">
+                <img src="/static/img/title.png">
+              </div>
+            </a>
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <div id="footer">
+    </div>
   </body>
 </html>
