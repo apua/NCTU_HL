@@ -10,11 +10,6 @@ table#information-table th {
     text-align: center;
 }
 
-table#information-table > caption {
-    font-weight: bold;
-    background-color: #FFCCCC;
-}
-
 table#information-table > thead > tr > th {
     background-color: #E5FFCD;
 }

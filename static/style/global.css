@@ -27,9 +27,10 @@ a:active {
     color: #FF33FF;
     text-decoration: none;
 }
-
 table > caption {
     font-size: 20px;
+    font-weight: bold;
+    background-color: #FFCCCC;
 }
 
 table > tbody > tr:nth-child(even) > td,

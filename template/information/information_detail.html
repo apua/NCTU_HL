@@ -44,13 +44,13 @@
         <tr>
             <td></td>
             <td><a href="{% url 'products' %}">[名產介紹]</a></td>
+            <td></td>
             <td><a href="{% url 'order' %}">[網路訂購]</a></td>
-            <td><a href="">[查詢訂購]</a></td>
             <td></td>
         </tr>
     </tbody>
 </table>
 
-<p>contact_email:{{ object.contact_email }}</p>
-<p>last_update:{{ object.last_update }}</p>
+<p>連絡我們:<a href="mailto:{{ object.contact_email }}" target="_blank">{{ object.contact_email }}</a></p>
+<p>上次更新:{{ object.last_update }}</p>
 {% endblock %}
