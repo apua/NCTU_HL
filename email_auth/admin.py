@@ -42,7 +42,6 @@ del UserChangeForm.declared_fields['username'], UserChangeForm.base_fields['user
 
 del UserCreationForm.declared_fields['username'], UserCreationForm.base_fields['username'], UserCreationForm.clean_username, UserCreationForm.Meta.fields
 UserCreationForm.Meta.model = User
-UserCreationForm.base_fields['email'] = forms.EmailField()
 
 UserAdmin.form = UserChangeForm
 UserAdmin.add_form = UserCreationForm
