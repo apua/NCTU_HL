@@ -2,8 +2,8 @@
 
 from django.contrib import admin
 from django.contrib.auth.models import Group
-from django.contrib.auth.admin import UserAdmin
-from django.forms import ModelForm
+from django.contrib.auth.admin import UserAdmin, UserCreationForm, UserChangeForm
+from django import forms
 
 from models import User
 from shopping_cart.models import Contact, Record
@@ -28,7 +28,7 @@ UserAdmin.fieldsets = (
 
 # create view
 UserAdmin.add_fieldsets = (
-    (None, {'fields': ('email', 'password')}),
+    (None, {'fields': ('email', 'password1', 'password2')}),
 )
 
 # list view
@@ -38,12 +38,14 @@ UserAdmin.list_display = ('email', 'last_login', 'date_joined', 'is_staff', 'is_
 UserAdmin.list_filter = ('is_staff','is_active')
 
 # form
-class UserForm(ModelForm):
-    class Meta:
-        model = User
+del UserChangeForm.declared_fields['username'], UserChangeForm.base_fields['username'], UserChangeForm.Meta.fields
 
-UserAdmin.form = UserForm
-UserAdmin.add_form = UserForm
+del UserCreationForm.declared_fields['username'], UserCreationForm.base_fields['username'], UserCreationForm.clean_username, UserCreationForm.Meta.fields
+UserCreationForm.Meta.model = User
+UserCreationForm.base_fields['email'] = forms.EmailField()
+
+UserAdmin.form = UserChangeForm
+UserAdmin.add_form = UserCreationForm
 
 # register
 admin.site.register(User, UserAdmin)
