@@ -34,11 +34,6 @@ UserAdmin.add_fieldsets = (
 # list view
 UserAdmin.ordering = ()
 UserAdmin.actions = None
-<<<<<<< local
-UserAdmin.list_display = ('email', 'last_login', 'date_joined', 'is_staff')
-UserAdmin.list_filter = ('is_staff',)
-UserAdmin.search_fields = []
-=======
 UserAdmin.list_display = ('email', 'last_login', 'date_joined', 'is_staff', 'is_active')
 UserAdmin.list_filter = ('is_staff','is_active')
 
@@ -49,7 +44,6 @@ class UserForm(ModelForm):
 
 UserAdmin.form = UserForm
 UserAdmin.add_form = UserForm
->>>>>>> other
 
 # register
 admin.site.register(User, UserAdmin)
