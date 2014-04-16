@@ -24,9 +24,9 @@ class ProductAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
-    def get_amount(self, obj):
-        return sum(r.amount for r in Record.objects.filter(product=obj))
-    get_amount.short_description = u'amount'
+    def get_total_order_amount(self, obj):
+        return sum(r.amount for r in Record.objects.filter(product=obj) if not r.user.is_staff)
+    get_total_order_amount.short_description = u'total order'
 
 
 admin.site.register(Product, ProductAdmin)
