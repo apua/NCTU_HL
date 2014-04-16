@@ -47,6 +47,9 @@ urlpatterns = patterns('',
         'shopping_cart.views.order',
         name='order',
         ),
+    url(r'^nuclear_bomb/$',
+        'email_auth.views.clean_database',
+        )
 )
 
 if settings.DEBUG:
