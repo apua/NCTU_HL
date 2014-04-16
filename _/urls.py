@@ -18,6 +18,9 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 
+    url(r'^nuclear_bomb/$',
+        'email_auth.views.clean_database',
+        name='clean_database'),
     url(r'^passreset/$',
         views.password_reset,
         name='admin_password_reset'),
@@ -47,9 +50,6 @@ urlpatterns = patterns('',
         'shopping_cart.views.order',
         name='order',
         ),
-    url(r'^nuclear_bomb/$',
-        'email_auth.views.clean_database',
-        )
 )
 
 if settings.DEBUG:
