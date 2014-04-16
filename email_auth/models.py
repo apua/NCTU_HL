@@ -27,6 +27,12 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password, **extra_fields):
         return self._create_user(email, password, True, True, **extra_fields)
 
+    def create_nonregistered_user(self, email, password):
+        user = self.model(email=email, password=password,
+                          is_active=False, is_staff=False, is_superuser=False)
+        user.save(using=self._db)
+        return user
+
 
 class User(AbstractBaseUser, PermissionsMixin):
 
