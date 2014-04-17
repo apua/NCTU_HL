@@ -115,12 +115,11 @@ def order(request):
     for form in amount_formset:
         D = _amounts[int(form['pid'].value())]
         form.supinfo= {'name': D['name'], 'price': D['price']}
-    #amount_formset.supinfo = { 'product': u'PRODUCT',
-    #                           'price':   u'PRICE',
-    #                           'amount':  u'AMOUNT',  }
-    amount_formset.supinfo = { 'product': u'品名',
-                               'price':   u'價格',
-                               'amount':  u'訂購數量',  }
+    amount_formset.supinfo = {
+        'product': Product._meta.get_field('name').verbose_name,
+        'price':   Product._meta.get_field('price').verbose_name,
+        'amount':  Record._meta.get_field('amount').verbose_name,
+    }
 
     context = {
         'contact_form': contact_form,

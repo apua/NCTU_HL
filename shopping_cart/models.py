@@ -5,8 +5,8 @@ from django.core.validators import RegexValidator
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=30)
-    price = models.PositiveSmallIntegerField()
+    name = models.CharField(max_length=30, verbose_name=u'品名')
+    price = models.PositiveSmallIntegerField(verbose_name=u'價格')
     picture = models.ImageField(blank=True, upload_to='.')
     description = models.TextField(blank=True)
     expiration = models.PositiveSmallIntegerField(default=0)
@@ -22,7 +22,7 @@ class Product(models.Model):
 class Record(models.Model):
     user = models.ForeignKey('email_auth.User')
     product = models.ForeignKey('shopping_cart.Product')
-    amount = models.PositiveSmallIntegerField()
+    amount = models.PositiveSmallIntegerField(verbose_name=u'數量')
     class Meta:
         unique_together = ('user', 'product')
 
