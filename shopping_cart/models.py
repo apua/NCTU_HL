@@ -3,6 +3,8 @@
 from django.db import models
 from django.core.validators import RegexValidator 
 
+from phonenumberfield import CellphoneModelField
+
 
 class Product(models.Model):
     name = models.CharField(max_length=30, verbose_name=u'品名')
@@ -57,16 +59,7 @@ class Contact(models.Model):
                 ),
             ],
         verbose_name=u'房號' )
-    phone = models.CharField(
+    phone = CellphoneModelField(
         max_length=15,
-        validators=[
-            RegexValidator(
-                #r'^(?:\+|\(\d+\))?[\d\- .]+$', # +886987774141 or (07)7935560 or 07-7935560
-                r'^09\d{8}$', #09aabbbccc
-                #u'Please enter phone number',
-                u'請輸入手機號碼',
-                #u'invalid phone number'
-                u'invalid phone number'
-                ),
-            ],
+        pattern=r'^09\d{8}$',
         verbose_name=u'手機' )
