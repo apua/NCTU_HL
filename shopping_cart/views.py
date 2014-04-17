@@ -107,8 +107,7 @@ def order(request):
             # save amount form set
             amount_formset.save()
     else:
-        contacts = Contact.objects.filter(user=user)
-        contact_form = ContactForm(instance=contacts[0] if contacts else None, prefix='contact')
+        contact_form = ContactForm(instance=Contact.objects.filter(user=user).first(), prefix='contact')
         amount_formset = AmountFormSet(prefix='order')
 
     # generate formset supplementary information
