@@ -15,7 +15,7 @@
 
     <form method="post">
 
-        {% csrf_token %}
+        {%if not readonly%}{%csrf_token%}{%endif%}
 
         {% include amount_formset.template %}
 
@@ -24,7 +24,7 @@
         </fieldset>
 
         <!-- <input type="submit" value="送出"/> -->
-        <button type="submit">送出</button>
+        {%if not readonly%}<button type="submit">送出</button>{%endif%}
 
     </form>
 </div>

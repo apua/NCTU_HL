@@ -1,6 +1,7 @@
 # -*- coding=utf8 -*-
 
 import os
+from datetime import datetime
 
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -9,6 +10,7 @@ from django.forms.formsets import formset_factory
 from django.forms.models import modelform_factory
 
 from models import Product, Record, Contact
+from information.models import Information
 
 
 class AmountForm(forms.Form):
@@ -86,7 +88,13 @@ def order(request):
     contact_template = os.path.join(__package__,'contact_form.html')
     amount_template =  os.path.join(__package__,'amount_form.html')
 
+    # readonly or not
+    info = Information.objects.first()
+    order_start, order_end = info.order_st, info.order_ed
+    today = datetime.now().date()
     user = request.user
+    readonly = not (user.is_superuser or order_start <= today <= order_end )
+
     # get amount data
     _records = { r.product: r.amount for r in Record.objects.filter(user=user) }
     _amounts = { p.id: {'amount': _records.get(p,0), 'name': p.name, 'price': p.price}
@@ -96,7 +104,7 @@ def order(request):
     ContactForm = modelform_factory(Contact, exclude=['user'])
     AmountFormSet = amountformset_factory(user=user, amountdata=_amounts)
 
-    if request.method=='POST':
+    if request.method=='POST' and not readonly:
         contact_form = ContactForm(request.POST, prefix='contact')
         amount_formset = AmountFormSet(request.POST, prefix='order')
         if contact_form.is_valid() and amount_formset.is_valid():
@@ -109,6 +117,12 @@ def order(request):
     else:
         contact_form = ContactForm(instance=Contact.objects.filter(user=user).first(), prefix='contact')
         amount_formset = AmountFormSet(prefix='order')
+
+    if readonly:
+        for field in contact_form.fields.viewvalues():
+            field.widget = forms.TextInput(attrs={'disabled':'disabled'})
+        for form in amount_formset:
+            form['amount'].field.widget = forms.TextInput(attrs={'disabled':'disabled'})
 
     # generate formset supplementary information
     contact_form.template = contact_template
@@ -124,6 +138,7 @@ def order(request):
 
     # render template
     context = {
+        'readonly': readonly,
         'contact_form': contact_form,
         'amount_formset': amount_formset,
         } 

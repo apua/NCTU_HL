@@ -14,7 +14,8 @@
         {{contact_form.phone.label_tag}}
         {% with contact_form.phone as p %} <!--pattern="(\+|\(\d+\))?[\d\- .]{7,13}"-->
         <input id="{{p.auto_id}} "type="tel" pattern="09\d{8}"
-               name="{{p.html_name}}" value="{{p.value}}" />
+               name="{{p.html_name}}" value="{{p.value}}"
+               {%if readonly%}readonly="True"{%endif%}/>
         {% endwith %}
         {{contact_form.phone.errors.as_ul}}
     </li>
