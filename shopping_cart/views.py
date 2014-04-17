@@ -111,19 +111,20 @@ def order(request):
         amount_formset = AmountFormSet(prefix='order')
 
     # generate formset supplementary information
-    for form in amount_formset:
-        D = _amounts[int(form['pid'].value())]
-        form.supinfo= {'name': D['name'], 'price': D['price']}
+    contact_form.template = contact_template
+    amount_formset.template = amount_template
     amount_formset.supinfo = {
         'product': Product._meta.get_field('name').verbose_name,
         'price':   Product._meta.get_field('price').verbose_name,
         'amount':  Record._meta.get_field('amount').verbose_name,
-    }
+        }
+    for form in amount_formset:
+        D = _amounts[int(form['pid'].value())]
+        form.supinfo= {'name': D['name'], 'price': D['price']}
 
+    # render template
     context = {
         'contact_form': contact_form,
         'amount_formset': amount_formset,
-        'contact_template': os.path.join(__package__,'contact_form.html'),
-        'amount_template': os.path.join(__package__,'amount_form.html'),
         } 
     return render(request, template, context)
