@@ -22,26 +22,29 @@ class AmountForm(forms.Form):
 
 
 def amountformset_factory(user, amountdata, form=AmountForm):
-    """
-    """
     FormSet = formset_factory(AmountForm, extra=0)
 
     class AmountFormSet(FormSet):
-        """
-        """
         def __init__(self, *args, **kwargs):
             kwargs['initial'] = [
-                #{'pid': pid, 'amount': amountdata[pid]['amount']}
+                # since amount field is a choice field, the type of post value of amount would be string
                 {'pid': pid, 'amount': unicode(amountdata[pid]['amount'])}
-                for pid in sorted(amountdata)]
+                for pid in sorted(amountdata)
+            ]
             super(AmountFormSet, self).__init__(*args, **kwargs)
+            self.supinfo = {
+                'product': Product._meta.get_field('name').verbose_name,
+                'price':   Product._meta.get_field('price').verbose_name,
+                'amount':  Record._meta.get_field('amount').verbose_name,
+                }
+            for form in self:
+                D = amountdata[int(form['pid'].value())]
+                form.supinfo= {'name': D['name'], 'price': D['price']}
 
         def clean(self):
             pass
 
         def save(self, commit=True):
-            """
-            """
             self.deleted = []
             changedData = {
                 int(form.cleaned_data['pid']):int(form.cleaned_data['amount'])
@@ -95,14 +98,9 @@ def order(request):
     user = request.user
     readonly = not (user.is_superuser or order_start <= today <= order_end )
 
-    # get amount data
-    _records = { r.product: r.amount for r in Record.objects.filter(user=user) }
-    _amounts = { p.id: {'amount': _records.get(p,0), 'name': p.name, 'price': p.price}
-                 for p in Product.objects.filter(on_sale=True) }
- 
     # generate form/formset class
     ContactForm = modelform_factory(Contact, exclude=['user'])
-    AmountFormSet = amountformset_factory(user=user, amountdata=_amounts)
+    AmountFormSet = amountformset_factory(user=user, amountdata=Record.objects.get_formset_data(user=user))
 
     if request.method=='POST' and not readonly:
         contact_form = ContactForm(request.POST, prefix='contact')
@@ -118,28 +116,19 @@ def order(request):
         contact_form = ContactForm(instance=Contact.objects.filter(user=user).first(), prefix='contact')
         amount_formset = AmountFormSet(prefix='order')
 
+    # handler when view is readonly
     if readonly:
         for field in contact_form.fields.viewvalues():
             field.widget = forms.TextInput(attrs={'disabled':'disabled'})
         for form in amount_formset:
             form['amount'].field.widget = forms.TextInput(attrs={'disabled':'disabled'})
 
-    # generate formset supplementary information
-    contact_form.template = contact_template
-    amount_formset.template = amount_template
-    amount_formset.supinfo = {
-        'product': Product._meta.get_field('name').verbose_name,
-        'price':   Product._meta.get_field('price').verbose_name,
-        'amount':  Record._meta.get_field('amount').verbose_name,
-        }
-    for form in amount_formset:
-        D = _amounts[int(form['pid'].value())]
-        form.supinfo= {'name': D['name'], 'price': D['price']}
-
     # render template
     context = {
         'readonly': readonly,
         'contact_form': contact_form,
         'amount_formset': amount_formset,
+        'contact_template': contact_template,
+        'amount_template': amount_template,
         } 
     return render(request, template, context)

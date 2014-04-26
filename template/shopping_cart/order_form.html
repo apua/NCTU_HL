@@ -17,10 +17,10 @@
 
         {%if not readonly%}{%csrf_token%}{%endif%}
 
-        {% include amount_formset.template %}
+        {% include amount_template %}
 
         <fieldset id="contact-info"><legend>{{user.email}} 連絡資訊</legend>
-            {% include contact_form.template %}
+            {% include contact_template %}
         </fieldset>
 
         <!-- <input type="submit" value="送出"/> -->

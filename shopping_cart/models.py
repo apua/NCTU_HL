@@ -6,6 +6,19 @@ from django.core.validators import RegexValidator
 from phonenumberfield import CellphoneModelField
 
 
+class RecordManager(models.Manager):
+    def get_formset_data(self, user):
+        records = {
+            r.product: r.amount
+            for r in Record.objects.select_related('Project').filter(user=user)
+            }
+        amounts = {
+            p.id: {'amount': records.get(p,0), 'name': p.name, 'price': p.price}
+            for p in Product.objects.filter(on_sale=True)
+            }
+        return amounts
+
+
 class Product(models.Model):
     name = models.CharField(max_length=30, verbose_name=u'品名')
     price = models.PositiveSmallIntegerField(verbose_name=u'價格')
@@ -25,6 +38,7 @@ class Record(models.Model):
     user = models.ForeignKey('email_auth.User')
     product = models.ForeignKey('shopping_cart.Product')
     amount = models.PositiveSmallIntegerField(verbose_name=u'數量')
+    objects = RecordManager()
     class Meta:
         unique_together = ('user', 'product')
 
