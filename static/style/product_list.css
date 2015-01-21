@@ -5,10 +5,6 @@ table#products-table {
     margin-bottom: 50px;
 }
 
-table#products-table > caption {
-    font-size: 20px;
-}
-
 table#products-table > thead > tr > th {
     background-color: #C2F1AB;
 }
