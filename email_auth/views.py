@@ -19,7 +19,7 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
 
-from models import User
+from .models import User
 
 
 def backup_database():

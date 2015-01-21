@@ -5,7 +5,7 @@ import inspect
 from django.contrib import admin
 from django.db.models.base import ModelBase
 
-from models import Product, Record
+from .models import Product, Record
 
 
 class RecordInline(admin.TabularInline):

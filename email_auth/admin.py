@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin, UserCreationForm, UserChangeForm
 from django import forms
 
-from models import User
+from .models import User
 from shopping_cart.models import Contact, Record
 
 

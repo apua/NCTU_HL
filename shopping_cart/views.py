@@ -9,7 +9,7 @@ from django import forms
 from django.forms.formsets import formset_factory
 from django.forms.models import modelform_factory
 
-from models import Product, Record, Contact
+from .models import Product, Record, Contact
 from information.models import Information
 
 
