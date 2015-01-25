@@ -28,7 +28,7 @@ def amountformset_factory(user, amountdata, form=AmountForm):
         def __init__(self, *args, **kwargs):
             kwargs['initial'] = [
                 # since amount field is a choice field, the type of post value of amount would be string
-                {'pid': pid, 'amount': unicode(amountdata[pid]['amount'])}
+                {'pid': pid, 'amount': amountdata[pid]['amount']}
                 for pid in sorted(amountdata)
             ]
             super(AmountFormSet, self).__init__(*args, **kwargs)
