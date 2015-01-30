@@ -3,3 +3,9 @@ div#content-main {
     margin: auto;
     text-align: center;
 }
+
+.form-row,
+.submit-row
+{
+    margin: 20px;
+}
