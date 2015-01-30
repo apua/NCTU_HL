@@ -14,6 +14,7 @@ div#container > h4 {
 
 ul.errorlist {
     color: red;
+    list-style-type: none;
 }
 
 #contact-info {
@@ -27,3 +28,8 @@ ul.errorlist {
 #contact-info > ul#contact-info-list {
     list-style-type: none;
 }
+
+#contact-info > ul#contact-info-list > li {
+    padding-top: 10px;
+}
+
