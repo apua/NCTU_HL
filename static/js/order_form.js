@@ -11,13 +11,15 @@
         for (var a = 0; a < count_tag.length; a++) {
             total += parseInt(count_tag[a].value);
         }
-        document.getElementById('total').value = total;
+        //document.getElementById('total').value = total;
+        document.getElementById('display-total').innerHTML = total;
     };
 
     var update = function (i) {
         var new_amount = parseInt(order_tag[i].value);
         var price = parseInt(document.getElementById('price' + i).value);
         document.getElementById('count' + i).value = new_amount * price;
+        document.getElementById('display-count' + i).innerHTML = new_amount * price;
         sumup();
     };
 

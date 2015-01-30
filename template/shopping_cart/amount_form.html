@@ -15,18 +15,20 @@
         <td>
             {{form.non_field_errors}}
             <input id="price{{forloop.counter0}}" type="hidden" value="{{form.supinfo.price}}" />
-            <input id="count{{forloop.counter0}}" class="count" type="number" value="0" />
+            <input id="count{{forloop.counter0}}" class="count" type="hidden" value="0" />
+            <div id="display-count{{forloop.counter0}}"/></div>
             {{form.amount.errors}}
         </td>
     </tr>
     {% endfor %}
     <!-- thin line in table -->
-    <tr><td></td><td></td><td></td><td></td></tr>
-    <tr><td></td><td></td><td></td><td></td></tr>
     <tr>
         <td>總計</td>
         <td></td>
         <td></td>
-        <td><input id="total" type="number" value="0"/></td>
+        <td>
+          <!--input id="total" type="number" value="0"/-->
+          <div id="display-total"></div>
+        </td>
     </tr>
 </table>

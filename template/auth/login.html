@@ -1,7 +1,14 @@
+{% extends "base.html" %}
+
+{% comment %}
 {% extends "admin/base_site.html" %}
+{% endcomment %}
+
 {% load i18n admin_static %}
 
 {% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}" />{% endblock %}
+
+{% block style %}/static/style/login_form.css{% endblock %}
 
 {% block bodyclass %}login{% endblock %}
 
