@@ -37,18 +37,22 @@
 <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
   <div class="form-row">
     {% if not form.this_is_the_login_form.errors %}{{ form.username.errors }}{% endif %}
-    <label for="id_username" class="required">{{ form.username.label }}:</label> {{ form.username }}
+    <label for="id_username" class="required">{{ form.username.label }}: </label>{{ form.username }}
   </div>
   <div class="form-row">
     {% if not form.this_is_the_login_form.errors %}{{ form.password.errors }}{% endif %}
-    <label for="id_password" class="required">{% trans 'Password:' %}</label> {{ form.password }}
+    <label for="id_password" class="required">{{ form.password.label }}: </label>{{ form.password }}
     <input type="hidden" name="this_is_the_login_form" value="1" />
     <input type="hidden" name="next" value="{{ next }}" />
   </div>
   {% url 'admin_password_reset' as password_reset_url %}
   {% if password_reset_url %}
-  <div class="password-reset-link">
+  <div class="password-reset-link form-row">
     <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
+  </div>
+
+  <div class="form-row">
+    <span> 還沒有帳號嗎？<a href="{% url 'signup' %}">在大家把好吃的名產訂光光以前註冊</a></span>
   </div>
   {% endif %}
   <div class="submit-row">

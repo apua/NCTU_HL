@@ -1,4 +1,15 @@
-<form action="" method="post">{% csrf_token %}
+{% extends "base.html" %}
+
+{% block style %}/static/style/signup_form.css{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <form action="" method="post">{% csrf_token %}
     {{form.as_p}}
-    <input type="submit" value="Signup" /></p>
-</form>
+    <input type="submit" value="Signup" />
+  </form>
+  <script type="text/javascript">
+    document.getElementById('id_email').focus()
+  </script>
+</div>
+{% endblock %}

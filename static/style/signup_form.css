@@ -1,0 +1,10 @@
+div#content-main {
+    width: 900px;
+    margin: auto;
+    text-align: center;
+}
+
+.helptext {
+    display: block;
+    margin: 20px;
+}
