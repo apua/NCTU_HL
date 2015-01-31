@@ -19,7 +19,7 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = (RecordInline,)
 
     # list view
-    list_display = ('name','get_total_order_amount')
+    list_display = ('name','get_total_order_amount', 'on_sale')
 
     def has_delete_permission(self, request, obj=None):
         return False
