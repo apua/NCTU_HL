@@ -21,27 +21,35 @@ urlpatterns = patterns('',
     url(r'^nuclear_bomb/$',
         'email_auth.views.clean_database',
         name='clean_database'),
+
     url(r'^signup/$',
         'email_auth.views.signup',
         name='signup'),
+
     url(r'^signupdone/$',
         'email_auth.views.signup_done',
         name='signup_done'),
+
     url(r'^signupconfirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$',
         'email_auth.views.signup_confirm',
         name='signup_confirm'),
+
     url(r'^passreset/$',
-        views.password_reset,
+        views.password_reset, kwargs={'template_name':'auth/passreset.html'},
         name='admin_password_reset'),
+
     url(r'^passresetdone/$',
         views.password_reset_done,
         name='password_reset_done'),
+
     url(r'^passresetconfirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$',
         views.password_reset_confirm,
         name='password_reset_confirm'),
+
     url(r'^passresetcomplete/$',
         views.password_reset_complete,
         name='password_reset_complete'),
+
     url(r'^login/$',
         views.login, kwargs={'template_name':'auth/login.html'},
         name='login'),
@@ -53,16 +61,15 @@ urlpatterns = patterns('',
     url(r'^$',
         DetailView.as_view( model=Info ),
         kwargs={'pk':1},
-        name='index',
-        ),
+        name='index'),
+
     url(r'^products/$',
         ListView.as_view( model=Product ),
-        name='products',
-        ),
+        name='products'),
+
     url(r'^order/$',
         'shopping_cart.views.order',
-        name='order',
-        ),
+        name='order'),
 )
 
 if settings.DEBUG:

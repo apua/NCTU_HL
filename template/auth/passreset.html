@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% comment %}
+{% extends "admin/base_site.html" %}
+{% endcomment %}
+
+{% load i18n %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; {% trans 'Password reset' %}
+</div>
+{% endblock %}
+
+{% block style %}/static/style/passreset_form.css{% endblock %}
+
+{% block content %}
+
+<div id="content-main">
+<p>{% trans "Forgotten your password? Enter your email address below, and we'll email instructions for setting a new one." %}</p>
+
+<form action="" method="post">{% csrf_token %}
+{{ form.email.errors }}
+<p><label for="id_email">{% trans 'Email address:' %}</label> {{ form.email }} <input type="submit" value="{% trans 'Reset my password' %}" /></p>
+</form>
+</div>
+
+{% endblock %}
