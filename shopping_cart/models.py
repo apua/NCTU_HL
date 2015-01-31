@@ -30,6 +30,9 @@ class Product(models.Model):
     def __unicode__ (self):
         return self.name
 
+    def __str__ (self):
+        return self.name
+
     class Meta:
         abstract = False
         verbose_name = verbose_name_plural = u'產品'
@@ -42,6 +45,11 @@ class Record(models.Model):
     class Meta:
         unique_together = ('user', 'product')
 
+    def __unicode__ (self):
+        return self.product.name
+
+    def __str__ (self):
+        return self.product.name
 
 class Contact(models.Model):
     user = models.OneToOneField('email_auth.User', primary_key=True)

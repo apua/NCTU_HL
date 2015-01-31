@@ -60,8 +60,10 @@ def amountformset_factory(user, amountdata, form=AmountForm):
 
             existingPid = set(sum(existingIns.values_list('product_id'),()))
             toZeroPid = {pid for pid in changedData if changedData[pid]==0}
-            updatedPid = changedData.viewkeys() - toZeroPid
-            newPid = changedData.viewkeys() - existingPid
+            # updatedPid = changedData.viewkeys() - toZeroPid
+            # newPid = changedData.viewkeys() - existingPid
+            updatedPid = changedData.keys() - toZeroPid
+            newPid = changedData.keys() - existingPid
 
             deletedIns = existingIns.filter(product_id__in=toZeroPid)
             updatedIns = existingIns.filter(product_id__in=updatedPid)
