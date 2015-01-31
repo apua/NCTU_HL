@@ -93,23 +93,26 @@ class SignupForm(forms.Form):
         email = self.cleaned_data['email']
         password = self.cleaned_data['password1']
         # save user model
-        user = User.objects.create_nonregistered_user(email=email, password=password)
+        #commented by pi314, temporary turn off email varification
+        # user = User.objects.create_nonregistered_user(email=email, password=password)
+        user = User.objects.create_user(email=email, password=password)
         # send email
-        from django.core.mail import send_mail
-        from django.template import loader
-        from django.contrib.sites.models import get_current_site
-        mail_from = User.objects.filter(is_superuser=True).first().email
-        rcpt_to = email
-        subject = u'洄瀾週帳號開通'
-        mail_content = loader.render_to_string(template, {
-            'email': user.email,
-            'domain': get_current_site(request).domain,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'user': user,
-            'token': token_generator.make_token(user),
-            'protocol': 'https' if request.is_secure() else 'http',
-        })
-        send_mail(subject, mail_content, mail_from, (rcpt_to,))
+        #commented by pi314, temporary turn off email varification
+        # from django.core.mail import send_mail
+        # from django.template import loader
+        # from django.contrib.sites.models import get_current_site
+        # mail_from = User.objects.filter(is_superuser=True).first().email
+        # rcpt_to = email
+        # subject = u'洄瀾週帳號開通'
+        # mail_content = loader.render_to_string(template, {
+        #     'email': user.email,
+        #     'domain': get_current_site(request).domain,
+        #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        #     'user': user,
+        #     'token': token_generator.make_token(user),
+        #     'protocol': 'https' if request.is_secure() else 'http',
+        # })
+        # send_mail(subject, mail_content, mail_from, (rcpt_to,))
 
 
 @sensitive_post_parameters()
