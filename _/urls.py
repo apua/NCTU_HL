@@ -46,6 +46,10 @@ urlpatterns = patterns('',
         views.login, kwargs={'template_name':'auth/login.html'},
         name='login'),
 
+    url(r'^logout/$',
+        'email_auth.views.logout_view',
+        name='logout'),
+
     url(r'^$',
         DetailView.as_view( model=Info ),
         kwargs={'pk':1},

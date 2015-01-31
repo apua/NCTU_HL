@@ -21,6 +21,7 @@ from django.views.decorators.cache import never_cache
 
 from .models import User
 
+from django.contrib.auth import logout
 
 def backup_database():
     try:
@@ -148,3 +149,7 @@ def signup_confirm(request, uidb64=None, token=None):
         return HttpResponse(u'帳號成功開通 (redirect to order page)')
     else:
         return HttpResponse(u'連結失效')
+
+def logout_view (request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
