@@ -39,6 +39,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
     email = models.EmailField(_('email address'), unique=True)
+    is_siteadmin = models.BooleanField(_('可看報表'), default=False,
+        help_text=_('跟進入 Django admin 無關'))
     is_staff = models.BooleanField(_('staff status'), default=False,
         help_text=_('Designates whether the user can log into this admin '
                     'site.'))

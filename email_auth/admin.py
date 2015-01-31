@@ -24,18 +24,19 @@ UserAdmin.inlines = (ContactInline, RecordInline)
 # detail view
 UserAdmin.fieldsets = (
     (None, {'fields': ('email', 'password')}),
+    (('Permissions'), {'fields': ('is_active', 'is_siteadmin')}),
 )
 
 # create view
 UserAdmin.add_fieldsets = (
-    (None, {'fields': ('email', 'password1', 'password2')}),
+    (None, {'fields': ('email', 'password1', 'password2','is_siteadmin')}),
 )
 
 # list view
 UserAdmin.ordering = ()
 UserAdmin.actions = None
-UserAdmin.list_display = ('email', 'last_login', 'date_joined', 'is_staff', 'is_active')
-UserAdmin.list_filter = ('is_staff','is_active')
+UserAdmin.list_display = ('email', 'last_login', 'date_joined', 'is_siteadmin', 'is_staff', 'is_active')
+UserAdmin.list_filter = ('is_siteadmin','is_staff','is_active')
 
 # form
 del UserChangeForm.declared_fields['username'], UserChangeForm.base_fields['username'], UserChangeForm.Meta.fields
