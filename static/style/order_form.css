@@ -33,3 +33,14 @@ ul.errorlist {
     padding-top: 10px;
 }
 
+#order-success {
+    color: blue;
+}
+
+.order-item-dirty {
+    color: #b01a1a;
+}
+
+.order-dirty {
+    display: none;
+}

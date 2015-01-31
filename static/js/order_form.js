@@ -25,7 +25,11 @@
 
     for (var a = 0; a < order_tag.length; a++) {
         order_tag[a].onchange = function () {
-            update(this.parentNode.id.slice(6));
+            var change_id = this.parentNode.id.slice(6);
+            update(change_id);
+            document.getElementById('order-success').className = 'order-dirty';
+            document.getElementById('display-count' + change_id).className = 'order-item-dirty';
+            document.getElementById('display-total').className = 'order-item-dirty';
         };
         update(a);
     }

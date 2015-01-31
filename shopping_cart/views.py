@@ -104,6 +104,7 @@ def order(request):
     ContactForm = modelform_factory(Contact, exclude=['user'])
     AmountFormSet = amountformset_factory(user=user, amountdata=Record.objects.get_formset_data(user=user))
 
+    order_success = False
     if request.method=='POST' and not readonly:
         contact_form = ContactForm(request.POST, prefix='contact')
         amount_formset = AmountFormSet(request.POST, prefix='order')
@@ -114,13 +115,16 @@ def order(request):
             ins.save()
             # save amount form set
             amount_formset.save()
+
+            # order successed (maybe?)
+            order_success = True
     else:
         contact_form = ContactForm(instance=Contact.objects.filter(user=user).first(), prefix='contact')
         amount_formset = AmountFormSet(prefix='order')
 
     # handler when view is readonly
     if readonly:
-        for field in contact_form.fields.viewvalues():
+        for field in contact_form.fields.values():
             field.widget = forms.TextInput(attrs={'disabled':'disabled'})
         for form in amount_formset:
             form['amount'].field.widget = forms.TextInput(attrs={'disabled':'disabled'})
@@ -132,5 +136,7 @@ def order(request):
         'amount_formset': amount_formset,
         'contact_template': contact_template,
         'amount_template': amount_template,
+        'order_success': order_success,
         } 
     return render(request, template, context)
+

@@ -13,6 +13,10 @@
     <h4>使用者 {{user.email}} 您好！</h4>
     <h4>歡迎使用交大洄瀾週訂購系統, 請填寫欲訂購的品項</h4>
 
+    <h3 id="order-success"
+      {% if not order_success %}class="order-dirty"{% endif %}
+      >訂購成功！</h3>
+
     <form method="post">
 
         {%if not readonly%}{%csrf_token%}{%endif%}
