@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block style %}/static/style/statistics.css{% endblock %}
+
+{% block content %}
+<div id="container">
+  <h3>{{ user.email }} 您好！</h3>
+  <h3>各名產訂購項目總和</h3>
+  <table id="product-table">
+    <tbody>
+      <tr><td>品項</td><td>總量</td></tr>
+      {% for product_name, amount in results.items %}
+        <tr><td>{{ product_name }}</td><td>{{ amount }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h4><a href="{% url 'statistics_index' %}">回到上頁</a></h4>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+div#container {
+    width: 900px;
+    margin: auto;
+    text-align: center;
+}
+
+#product-table {
+    margin: auto;
+}
+
+ul.errorlist {
+    color: red;
+    list-style-type: none;
+}
+
+#contact-info {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 500px;
+    text-align: left;
+}
+
+#contact-info > ul#contact-info-list {
+    list-style-type: none;
+}
+
+#contact-info > ul#contact-info-list > li {
+    padding-top: 10px;
+}
+
+#order-success {
+    color: blue;
+}
+
+.order-item-dirty {
+    color: #b01a1a;
+}
+
+.order-dirty {
+    display: none;
+}

@@ -70,6 +70,14 @@ urlpatterns = patterns('',
     url(r'^order/$',
         'shopping_cart.views.order',
         name='order'),
+
+    url(r'^statistics/$',
+        'nctuhl_statistics.views.statistics_index',
+        name='statistics_index'),
+
+    url(r'^statistics/products$',
+        'nctuhl_statistics.views.statistics_products',
+        name='statistics_products'),
 )
 
 if settings.DEBUG:
