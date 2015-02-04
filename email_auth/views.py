@@ -132,8 +132,8 @@ def signup(request, template='registration/signup_form.html'):
 
 
 def signup_done(request):
-    return HttpResponse(u'確認信已寄出 (待認證)')
-
+    template = 'registration/signup_done.html'
+    return render(request, template, {})
 
 def signup_confirm(request, uidb64=None, token=None):
     '''according "uidb64" and "token" to set user active'''
