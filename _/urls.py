@@ -72,12 +72,16 @@ urlpatterns = patterns('',
         name='order'),
 
     url(r'^statistics/$',
-        'nctuhl_statistics.views.statistics_index',
-        name='statistics_index'),
+        'nctuhl_statistics.views.stat_index',
+        name='stat_index'),
 
-    url(r'^statistics/products$',
-        'nctuhl_statistics.views.statistics_products',
-        name='statistics_products'),
+    url(r'^statistics/products/$',
+        'nctuhl_statistics.views.stat_products',
+        name='stat_products'),
+
+    url(r'^statistics/dorms/$',
+        'nctuhl_statistics.views.stat_dorms',
+        name='stat_dorms'),
 )
 
 if settings.DEBUG:

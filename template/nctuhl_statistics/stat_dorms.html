@@ -5,12 +5,12 @@
 {% block content %}
 <div id="container">
   <h3>{{ user.email }} 您好！</h3>
-  <h3>各名產訂購項目總和</h3>
+  <h3>各宿舍訂購單數量</h3>
   <table id="product-table">
     <tbody>
-      <tr><td>品項</td><td>總量</td></tr>
-      {% for product_name, amount in results.items %}
-        <tr><td>{{ product_name }}</td><td>{{ amount }}</td></tr>
+      <tr><td>宿舍</td><td>總量</td></tr>
+      {% for record in results %}
+        <tr><td>{{ record.0 }}</td><td>{{ record.1 }}</td></tr>
       {% endfor %}
     </tbody>
   </table>

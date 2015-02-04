@@ -51,7 +51,7 @@
                 <a href="{% url 'logout' %}">登出</a>
               {% endif %}
               {% if user.is_siteadmin %}
-                / <a href="{% url 'statistics_index' %}">統計</a>
+                / <a href="{% url 'stat_index' %}">統計</a>
               {% endif %}
             </td>
         </tr>
