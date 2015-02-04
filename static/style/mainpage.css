@@ -28,3 +28,8 @@ table#information-table > tbody > tr:nth-child(odd) > th {
     background-color: #FFE7CD;
 }
 
+p {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
