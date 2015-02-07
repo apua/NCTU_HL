@@ -76,3 +76,8 @@ table > tbody > tr:nth-child(odd) > td,
 table > tbody > tr:nth-child(odd) > th {
     background-color: #FFE7CD;
 }
+
+ul.errorlist {
+    color: red;
+    list-style-type: none;
+}

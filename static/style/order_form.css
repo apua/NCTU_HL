@@ -12,11 +12,6 @@ div#container > h4 {
     margin: auto;
 }
 
-ul.errorlist {
-    color: red;
-    list-style-type: none;
-}
-
 #contact-info {
     margin: auto;
     margin-top: 20px;

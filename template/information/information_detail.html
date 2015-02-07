@@ -53,6 +53,9 @@
               {% if user.is_siteadmin %}
                 / <a href="{% url 'stat_index' %}">統計</a>
               {% endif %}
+              {% if user.is_staff %}
+                / <a href="/admin">後台</a>
+              {% endif %}
             </td>
         </tr>
     </tbody>
