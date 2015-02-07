@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <link type="text/css" href="/static/style/stat_print.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <table>
+      <tbody>
+        {% for i in table %}
+          <tr>
+            <td>姓名</td>
+            <td>{{ i.name }}</td>
+            <td>Email</td>
+            <td>{{ i.email }}</td>
+            <td>宿舍房號</td>
+            <td>{{ i.dorm }} {{ i.room }}</td>
+            <td>連絡手機</td>
+            <td>{{ i.phone }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
