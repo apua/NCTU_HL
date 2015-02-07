@@ -1,16 +1,25 @@
 from django.shortcuts import render
 
 from shopping_cart.models import Product, Record, Contact
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 import os
 
 # Create your views here.
+@login_required(login_url='/login/')
 def stat_index (request):
+    if not request.user.is_siteadmin:
+        return HttpResponseRedirect(reverse('index'))
     template = os.path.join(__package__,'stat_index.html')
     context = { }
     return render(request, template, context)
 
+@login_required(login_url='/login/')
 def stat_products (request):
+    if not request.user.is_siteadmin:
+        return HttpResponseRedirect(reverse('index'))
     template = os.path.join(__package__,'stat_products.html')
 
     result = {i.name: 0 for i in Product.objects.all()}
@@ -23,7 +32,10 @@ def stat_products (request):
     }
     return render(request, template, context)
 
+@login_required(login_url='/login/')
 def stat_dorms (request):
+    if not request.user.is_siteadmin:
+        return HttpResponseRedirect(reverse('index'))
     template = os.path.join(__package__,'stat_dorms.html')
 
     dorm_ids = [i.dorm for i in Contact.objects.all()]
