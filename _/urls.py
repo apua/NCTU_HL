@@ -82,6 +82,10 @@ urlpatterns = patterns('',
     url(r'^statistics/dorms/$',
         'nctuhl_statistics.views.stat_dorms',
         name='stat_dorms'),
+
+    url(r'^statistics/print/$',
+        'nctuhl_statistics.views.stat_print',
+        name='stat_print'),
 )
 
 if settings.DEBUG:

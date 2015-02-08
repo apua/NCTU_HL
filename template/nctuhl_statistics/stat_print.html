@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <link type="text/css" href="/static/style/stat_print.css" rel="stylesheet"/>
+  </head>
+  <body>
+    {% for i in table %}
+      <div class="sheet">
+        <div class="user-data">
+          <div class="prompt">姓名：</div>
+          <div class="user-data-col1">{{ i.name }}</div>
+          <div class="user-data-col2 right-col">{{ i.phone }}</div>
+          <div class="prompt right-col">連絡手機：</div>
+          <br>
+          <div class="prompt">宿舍房號：</div>
+          <div class="user-data-col1">{{ i.dorm }} {{ i.room }}</div>
+          <div class="user-data-col2 right-col">{{ i.email }}</div>
+          <div class="prompt right-col">Email：</div>
+          <hr>
+          <div class="product-name">品項</div>
+          <div class="amount">數量</div>
+          <div class="subtotal">小計</div>
+          <div class="subtotal right-col">小計</div>
+          <div class="amount right-col">數量</div>
+          <div class="product-name right-col">品項</div>
+          <br>
+          {% for j in i.order %}
+            {% if forloop.counter0|divisibleby:2 %}
+              <div class="product-name">{{ j.0 }}</div>
+              <div class="amount">{{ j.1 }}</div>
+              <div class="subtotal">{{ j.2 }}</div>
+            {% else %}
+              <div class="subtotal right-col">{{ j.2 }}</div>
+              <div class="amount right-col">{{ j.1 }}</div>
+              <div class="product-name right-col">{{ j.0 }}</div>
+              <br>
+            {% endif %}
+          {% endfor %}
+          <hr>
+          <div class="product-name">總計</div>
+          <div class="amount"></div>
+          <div class="subtotal">{{ i.total }}</div>
+        </div>
+        <div>
+        </div>
+      </div>
+    {% endfor %}
+  </body>
+</html>

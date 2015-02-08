@@ -1,0 +1,48 @@
+.sheet {
+    border: 1px solid black;
+    margin: 2px auto;
+    /* width: 670px; */
+}
+
+.user-data {
+    border: 1px solid black;
+    margin: 2px;
+}
+
+.user-data > div {
+    display: inline-block;
+    padding: 2px;
+}
+
+.prompt {
+    width: 15%;
+}
+
+.user-data-col1 {
+    width: 20%;
+}
+
+.user-data-col2 {
+    width: 35%;
+    float: right;
+}
+
+hr {
+    margin: 2px;
+}
+
+.product-name {
+    width: 15%;
+}
+
+.amount {
+    width: 5%;
+}
+
+.subtotal {
+    width: 20%;
+}
+
+.right-col {
+    float: right;
+}

@@ -53,6 +53,7 @@ class Record(models.Model):
 
 class Contact(models.Model):
     user = models.OneToOneField('email_auth.User', primary_key=True)
+    name = models.CharField(max_length=30, verbose_name=u'姓名')
     dorm = models.PositiveSmallIntegerField(
         choices=(
             ( 0, u'外宿'),
