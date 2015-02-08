@@ -66,7 +66,7 @@ def stat_print (request):
         return HttpResponseRedirect(reverse('index'))
     template = os.path.join(__package__,'stat_print.html')
     table = [{
-            'name':  'name',
+            'name':  i.name,
             'email': i.user.email,
             'dorm':  dorm_table[i.dorm],
             'room':  i.room,
