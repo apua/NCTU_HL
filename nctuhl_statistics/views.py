@@ -22,13 +22,8 @@ def stat_products (request):
         return HttpResponseRedirect(reverse('index'))
     template = os.path.join(__package__,'stat_products.html')
 
-    result = {i.name: 0 for i in Product.objects.all()}
-
-    for i in Record.objects.all():
-        result[i.product.name] += i.amount
-
     context = {
-        'results': result
+        'results': [(i.name, sum([j.amount for j in Record.objects.filter(product=i)])) for i in Product.objects.all()]
     }
     return render(request, template, context)
 

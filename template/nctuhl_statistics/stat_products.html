@@ -9,8 +9,8 @@
   <table id="product-table">
     <tbody>
       <tr><td>品項</td><td>總量</td></tr>
-      {% for product_name, amount in results.items %}
-        <tr><td>{{ product_name }}</td><td>{{ amount }}</td></tr>
+      {% for record in results %}
+        <tr><td>{{ record.0 }}</td><td>{{ record.1 }}</td></tr>
       {% endfor %}
     </tbody>
   </table>
