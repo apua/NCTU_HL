@@ -61,7 +61,7 @@ def stat_print (request):
         return HttpResponseRedirect(reverse('index'))
     template = os.path.join(__package__,'stat_print.html')
 
-    table = [{
+    table = filter(lambda x:x['total'] > 0, [{
             'name':  i.name,
             'email': i.user.email,
             'dorm':  dorm_table[i.dorm],
@@ -69,7 +69,7 @@ def stat_print (request):
             'phone': i.phone,
             'order': [(j.product.name, j.amount, j.product.price * j.amount) for j in Record.objects.filter(user=i.user)],
             'total': sum([j.amount * j.product.price for j in Record.objects.filter(user=i.user)]),
-        } for i in Contact.objects.all()]
+        } for i in Contact.objects.all()])
     context = {
         'table': table
     }
