@@ -42,13 +42,16 @@ def stat_products (request):
     }
     return render(request, template, context)
 
+def user_order_total (user):
+    return sum([j.amount * j.product.price for j in Record.objects.filter(user=user)])
+
 @login_required(login_url='/login/')
 def stat_dorms (request):
     if not request.user.is_siteadmin:
         return HttpResponseRedirect(reverse('index'))
     template = os.path.join(__package__,'stat_dorms.html')
 
-    dorm_ids = [i.dorm for i in Contact.objects.all()]
+    dorm_ids = [i.dorm for i in Contact.objects.all() if user_order_total(i.user) > 0]
 
     context = {
         'results': sorted([ (dorm_table[i], dorm_ids.count(i)) for i in dorm_table ], key=lambda x:x[0])
@@ -68,7 +71,7 @@ def stat_print (request):
             'room':  i.room,
             'phone': i.phone,
             'order': [(j.product.name, j.amount, j.product.price * j.amount) for j in Record.objects.filter(user=i.user)],
-            'total': sum([j.amount * j.product.price for j in Record.objects.filter(user=i.user)]),
+            'total': user_order_total(i.user)
         } for i in Contact.objects.all()])
     context = {
         'table': table
