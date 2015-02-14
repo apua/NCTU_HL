@@ -39,15 +39,15 @@ urlpatterns = patterns('',
         name='admin_password_reset'),
 
     url(r'^passresetdone/$',
-        views.password_reset_done,
+        views.password_reset_done, kwargs={'template_name':'auth/passresetdone.html'},
         name='password_reset_done'),
 
     url(r'^passresetconfirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$',
-        views.password_reset_confirm,
+        views.password_reset_confirm, kwargs={'template_name':'auth/passresetconfirm.html'},
         name='password_reset_confirm'),
 
     url(r'^passresetcomplete/$',
-        views.password_reset_complete,
+        views.password_reset_complete, kwargs={'template_name':'auth/passresetcomplete.html'},
         name='password_reset_complete'),
 
     url(r'^login/$',

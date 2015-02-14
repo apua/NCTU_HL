@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% comment %}
+{% extends "admin/base_site.html" %}
+{% endcomment %}
+
+{% load i18n %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; {% trans 'Password reset' %}
+</div>
+{% endblock %}
+
+{% block style %}/static/style/passreset_form.css{% endblock %}
+
+{% block content %}
+
+<div id="content-main">
+<h3>密碼重設信件已經寄出，請檢查您的信箱，或是垃圾信件匣，以進行下一步動作。</h3>
+<script>
+  setTimeout(function () {window.location = '/';}, 3000);
+</script>
+</div>
+
+{% endblock %}
