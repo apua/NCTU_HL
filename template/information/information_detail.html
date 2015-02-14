@@ -4,7 +4,9 @@
 
 {% block content %}
 <div id="content-main">
+  {% if user.is_authenticated %}
   <h3>使用者 {{ user.email }} 您好！</h3>
+  {% endif %}
   <table id="information-table">
       <caption>各項活動時間表</caption>
       <thead>
