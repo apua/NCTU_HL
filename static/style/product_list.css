@@ -25,7 +25,10 @@ table#products-table > thead > tr > th.expiration {
 }
 
 table#products-table > tbody > tr > td.img > img {
-    height: 250px;
+    max-height: 250px;
+    max-width: 250px;
+    min-height: 200px;
+    min-width: 200px;
 }
 
 table#products-table > tbody > tr > td.name {
