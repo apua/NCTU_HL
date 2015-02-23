@@ -70,7 +70,11 @@ def stat_print (request):
             'dorm':  dorm_table[i.dorm],
             'room':  i.room,
             'phone': i.phone,
-            'order': [(j.product.name, j.amount, j.product.price * j.amount) for j in Record.objects.filter(user=i.user)],
+            'order': [
+                (j.product.name, j.amount, j.product.price * j.amount)
+                for j in Record.objects.filter(user=i.user)
+                if j.amount != 0
+                ],
             'total': user_order_total(i.user)
         } for i in Contact.objects.all()])
     context = {
